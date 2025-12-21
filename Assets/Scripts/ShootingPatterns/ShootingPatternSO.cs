@@ -9,9 +9,9 @@ public abstract class ShootingPatternSO : ScriptableObject
     public int bulletAmount;
     public int numberOfBursts;
     public float burstCooldown;
-    
+
     //Coroutine to handle shooting bursts
-    
+
     public IEnumerator Shoot(Vector2 shootOrigin, Vector2 objectivePos, GenericObjectPool<TestBullet> bulletPool)
     {
         for (int burst = 0; burst < numberOfBursts; burst++)
@@ -21,7 +21,21 @@ public abstract class ShootingPatternSO : ScriptableObject
         }
     }
 
-    
+    //Sets the shooting pattern parameters and assign the owner layer of the bullet
+    protected void SetBulletParameters(TestBullet bullet, Vector2 shootOrigin, Vector2 bulletDirection)
+    {
+
+        bullet.SetOwnerLayer(true); // Set to enemy bullet layer
+        bullet.transform.position = shootOrigin;
+        bullet.SetOrigin(shootOrigin);
+        bullet.SetSpeed(bulletSpeed);
+        bullet.SetCircularSpeed(rotationSpeed);
+        
+        bullet.SetDirection(bulletDirection);
+
+    }
+
+
     //Abstract method to be implemented by child classes for shooting behavior
     protected abstract void ExecuteShootingPattern(Vector2 shootOrigin, Vector2 objectivePos, GenericObjectPool<TestBullet> bulletPool);
 }

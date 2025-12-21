@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2189558053603205828}
   - component: {fileID: 7069395397909992482}
+  - component: {fileID: 1135118158604202397}
   - component: {fileID: 4514094880138164054}
   - component: {fileID: 2028814741396964984}
   - component: {fileID: 2402892824418473704}
@@ -97,6 +98,21 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &1135118158604202397
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8222465771515404648}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0808d15d28017584886e079beb7bc751, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerShoot
+  shootCooldown: 0.5
+  bulletSpeed: 10
+  shootOffset: {x: 0, y: 15, z: 0}
 --- !u!114 &4514094880138164054
 MonoBehaviour:
   m_ObjectHideFlags: 0

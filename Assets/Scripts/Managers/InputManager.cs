@@ -7,8 +7,9 @@ public class InputManager : MonoBehaviour
     private Vector2 moveInput;
     public static event Action<Vector2> onMoveInput;
     public static event Action onParryInput;
-
+    public static event Action onShootInput;
     public static InputManager Instance { get; private set; }  
+    
 
     // Awake is called when the script instance is being loaded
     void Awake()
@@ -26,6 +27,7 @@ public class InputManager : MonoBehaviour
         playerControls = new PlayerControls();
 
     }
+
 
     // Enable input actions
     void OnEnable()
@@ -46,11 +48,15 @@ public class InputManager : MonoBehaviour
         moveInput = playerControls.PlayerActions.Move.ReadValue<Vector2>();
         onMoveInput?.Invoke(moveInput);
 
+
         //Parry Input Handling
         if (playerControls.PlayerActions.Parry.triggered)
             onParryInput?.Invoke();
 
-        //TODO: Shoot Input Handling (PENDING)
+
+        //Shoot Input Handling
+        if (playerControls.PlayerActions.Shoot.triggered)
+            onShootInput?.Invoke();
         
     }
 }

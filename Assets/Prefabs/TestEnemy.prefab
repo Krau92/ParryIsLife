@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 1641218806408001038}
   - component: {fileID: 7782581098627433356}
   - component: {fileID: 6447954401738403766}
+  - component: {fileID: 6124210553187296812}
   m_Layer: 9
   m_Name: TestEnemy
   m_TagString: Enemy
@@ -80,7 +81,7 @@ SpriteRenderer:
   m_SortingLayerID: 1892534313
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 7482667652216324306, guid: 75f5f34dc1b5347e0b8351032682f224, type: 3}
+  m_Sprite: {fileID: -5755022124085886804, guid: d1d6e03b9825fb24cae4dea95d64164f, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -98,13 +99,49 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1215338840727978945}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2c5fac7fc9239a8408d9fff24bbd94dc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyShooting
   bulletPrefab: {fileID: 3472390798304262286, guid: db49b92085a4bb04d9bcda05a545ca12, type: 3}
-  shootCheckInterval: 3
+  shootCheckInterval: 3.5
   shootingPattern:
-  - {fileID: 11400000, guid: af28cd4b0d058d742871ebb32019ac6c, type: 2}
+  - {fileID: 11400000, guid: c26e376b9442d7046ae0e33bfb4a0e42, type: 2}
   player: {fileID: 0}
+--- !u!58 &6124210553187296812
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1215338840727978945}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_ForceSendLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ForceReceiveLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_ContactCaptureLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_CallbackLayers:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_CompositeOperation: 0
+  m_CompositeOrder: 0
+  m_Offset: {x: 0, y: 0}
+  m_Radius: 1.7028573

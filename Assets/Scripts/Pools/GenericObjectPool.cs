@@ -3,7 +3,6 @@ using UnityEngine.Pool;
 
 public abstract class GenericObjectPool<T> : MonoBehaviour where T : Component
 {
-    public static GenericObjectPool<T> Instance { get; private set; }
 
     [Header("Pool Settings")]
     [SerializeField] protected T prefab; // Generic prefab to pool
@@ -13,21 +12,7 @@ public abstract class GenericObjectPool<T> : MonoBehaviour where T : Component
 
     private IObjectPool<T> pool;
 
-    protected virtual void Awake()
-    {
-        // Singleton Genérico
-        if (Instance != null && Instance != this)
-        {
-            Destroy(gameObject);
-            return;
-        }
-        Instance = this;
-
-        InitializePool();
-    }
-
-
-    private void InitializePool()
+    protected void InitializePool()
     {
         pool = new ObjectPool<T>(
             createFunc: CreateItem,
@@ -39,12 +24,18 @@ public abstract class GenericObjectPool<T> : MonoBehaviour where T : Component
             maxSize: maxPoolSize
         );
     }
-
+    protected virtual void AssignPoolToItem(T item)
+    {
+        // Assign the pool reference to the pooled item if needed
+    }
 
     protected virtual T CreateItem()
     {
         // Instantiate prefab
         T instance = Instantiate(prefab);
+        instance.transform.position = Camera.main.transform.position + Vector3.back * 1000;
+        instance.gameObject.SetActive(false);
+        AssignPoolToItem(instance);
         return instance;
     }
 
@@ -55,6 +46,7 @@ public abstract class GenericObjectPool<T> : MonoBehaviour where T : Component
 
     protected virtual void OnReturnToPool(T item)
     {
+        item.transform.position = Camera.main.transform.position + Vector3.back * 1000;
         item.gameObject.SetActive(false);
     }
 

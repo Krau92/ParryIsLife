@@ -17,6 +17,7 @@ public class ConePatternSO : ShootingPatternSO
     {
         
         TestBullet bullet = bulletPool.Get();
+
         float currentAngle = startAngle + (angleStep * i);
         
         if (bulletAmount == 1) currentAngle = initialAngle;
@@ -24,15 +25,7 @@ public class ConePatternSO : ShootingPatternSO
         float radians = currentAngle * Mathf.Deg2Rad;
         Vector2 bulletDirection = new Vector2(Mathf.Cos(radians), Mathf.Sin(radians));
 
-
-            bullet.SetDirection(bulletDirection);
-
-
-            //!Can this go in the parent class in order to DRY?
-            bullet.transform.position = shootOrigin;
-            bullet.SetOrigin(shootOrigin);
-            bullet.SetSpeed(bulletSpeed);
-            bullet.SetCircularSpeed(rotationSpeed);
+        SetBulletParameters(bullet, shootOrigin, bulletDirection);
         
         // Visually rotate the bullet to match its direction
         bullet.transform.rotation = Quaternion.Euler(0, 0, currentAngle);

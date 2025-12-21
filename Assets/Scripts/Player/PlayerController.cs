@@ -1,7 +1,5 @@
 using UnityEngine;
 using UnityEngine.Scripting.APIUpdating;
-
-//The "Puppet Master" script that handles player movement and parry mechanics
 public class PlayerController : MonoBehaviour
 {
 

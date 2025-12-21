@@ -17,14 +17,8 @@ protected override void ExecuteShootingPattern(Vector2 shootOrigin, Vector2 obje
             Vector2 bulletDirection = new Vector2(bulletDirXPosition, bulletDirYPosition) - shootOrigin;
             bulletDirection.Normalize();
             
-            bullet.SetDirection(bulletDirection);
-
-            //!Can this go in the parent class in order to DRY?
-            bullet.transform.position = shootOrigin;
-            bullet.SetOrigin(shootOrigin);
-            bullet.SetSpeed(bulletSpeed);
-            bullet.SetCircularSpeed(rotationSpeed);
-
+            SetBulletParameters(bullet, shootOrigin, bulletDirection);
+            
             angle += angleStep;
         }
     }

@@ -7,6 +7,11 @@ public class TestBullet : MonoBehaviour
     private float radius;
     private float angle;
 
+    [SerializeField] private int playerBulletLayer = 0; // set in Inspector to the PlayerBullet layer index
+    [SerializeField] private int enemyBulletLayer = 0;  // set in Inspector to the EnemyBullet layer index
+    GenericObjectPool<TestBullet> pool;
+
+
     private Vector2 direction;
 
     private float speed = 5f;
@@ -34,6 +39,11 @@ public class TestBullet : MonoBehaviour
              
     }
 
+    public void SetPool(GenericObjectPool<TestBullet> bulletPool)
+    {
+        pool = bulletPool;
+    }
+
     public void SetOrigin(Vector2 newOrigin)
     {
         origin = newOrigin;
@@ -59,13 +69,18 @@ public class TestBullet : MonoBehaviour
         }
     }
 
+    public void SetOwnerLayer(bool isEnemy)
+    {
+        gameObject.layer = isEnemy ? enemyBulletLayer : playerBulletLayer;
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !isReturningToPool)
+        if ((other.CompareTag("Player") || other.CompareTag("Enemy")) && !isReturningToPool)
         {
             // Return bullet to pool
             isReturningToPool = true;
-            EnemyBulletPool.Instance.ReturnToPool(this);
+            pool.ReturnToPool(this);
         }
     }
 
@@ -76,7 +91,7 @@ public class TestBullet : MonoBehaviour
         if (invisibleTimer >= invisibleDuration)
         {
             isReturningToPool = true;
-            EnemyBulletPool.Instance.ReturnToPool(this);
+            pool.ReturnToPool(this);
         }
     }
 

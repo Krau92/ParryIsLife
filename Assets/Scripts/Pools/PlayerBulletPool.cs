@@ -1,9 +1,8 @@
 
 //!Using TestBullet while not real bullet
-public class EnemyBulletPool : GenericObjectPool<TestBullet>
+public class PlayerBulletPool : GenericObjectPool<TestBullet>
 {
-    
-    public static EnemyBulletPool Instance { get; private set; }
+    public static PlayerBulletPool Instance { get; private set; }
     void Awake()
     {
         //Singleton Pattern Implementation
@@ -18,7 +17,6 @@ public class EnemyBulletPool : GenericObjectPool<TestBullet>
 
         InitializePool();
     }
-    
     protected override void AssignPoolToItem(TestBullet item)
     {
         item.SetPool(this);

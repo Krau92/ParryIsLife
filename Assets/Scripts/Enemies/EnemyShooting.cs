@@ -5,7 +5,7 @@ using UnityEngine;
 public class EnemyShooting : MonoBehaviour
 {
     //TODO: Implementar la lista de patterns de disparo
-    [SerializeField] private TestBullet bulletPrefab;
+    [SerializeField] private NewTestBullet bulletPrefab;
     [SerializeField] private float shootCheckInterval = 3f;
     [SerializeField] private List<ShootingPatternSO> shootingPattern;
     [SerializeField] private Transform player;
@@ -28,7 +28,7 @@ public class EnemyShooting : MonoBehaviour
             Vector3 targetCenter = player.GetComponent<SpriteRenderer>().bounds.center;
             foreach (var pattern in shootingPattern)
             {
-                StartCoroutine(pattern.Shoot(transform.position, targetCenter, EnemyBulletPool.Instance));
+                StartCoroutine(pattern.Shoot(transform.position, targetCenter, bulletPrefab));
             }
             shootTimer = 0f;
         }

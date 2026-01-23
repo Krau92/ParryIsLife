@@ -1,32 +1,30 @@
+using System.Collections.Generic;
 using UnityEngine;
-//!OBSOLETE
+
 public class TestEnemyShooting : MonoBehaviour
 {
-    [SerializeField] private GameObject bulletPrefab;
     [SerializeField] private Vector2 shootOffset;
     [SerializeField] private float shootInterval = 1f;
+    public List<ShootingPatternSO> shootingPatterns;
+    [SerializeField] private NewTestBullet bulletPrefab;
+    [SerializeField] private Transform[] spawnPositions;
+    private Vector2 spawnPosition;
 
     private float shootTimer;
     [SerializeField]private Transform playerTransform;
 
     private void Update()
     {
-        shootTimer += Time.deltaTime;
-
-        if (shootTimer >= shootInterval)
-        {
-            ShootAtPlayer();
-            shootTimer = 0f;
-        }
+        
     }
 
-    private void ShootAtPlayer()
+    public void SetSpawnPosition(int i)
     {
-        Vector3 shootPosition = transform.position + (Vector3)shootOffset;
-        Vector3 directionToPlayer = (playerTransform.position - shootPosition).normalized;
+        spawnPosition = (Vector2)spawnPositions[i].position;
+    }
 
-        GameObject bullet = Instantiate(bulletPrefab, shootPosition, Quaternion.LookRotation(Vector3.forward, directionToPlayer));
-        bullet.GetComponentInChildren<TestBullet>().SetDirection(directionToPlayer);
-        // Assuming the bullet has a script to handle its movement
+    public void ShootPattern(int i)
+    {
+        StartCoroutine(shootingPatterns[i].Shoot(spawnPosition, playerTransform.position, bulletPrefab));
     }
 }

@@ -1,4 +1,5 @@
 using System;
+using UnityEditor;
 using UnityEngine;
 
 public class InputManager : MonoBehaviour
@@ -6,8 +7,15 @@ public class InputManager : MonoBehaviour
     private PlayerControls playerControls;
     private Vector2 moveInput;
     public static event Action<Vector2> onMoveInput;
+
     public static event Action onParryInput;
+    public static event Action onStopParryInput;
+
     public static event Action onShootInput;
+    public static event Action onStopShootInput;
+
+    public static event Action onMeleeInput;
+
     public static InputManager Instance { get; private set; }  
     
 
@@ -18,6 +26,10 @@ public class InputManager : MonoBehaviour
         if (Instance == null)
         {
             Instance = this;
+            
+            // Configure frame rate and physics timestep
+            Application.targetFrameRate = 60;
+            Time.fixedDeltaTime = 0.016667f; // 60 Hz physics (1/60)
         }
         else
         {
@@ -53,10 +65,29 @@ public class InputManager : MonoBehaviour
         if (playerControls.PlayerActions.Parry.triggered)
             onParryInput?.Invoke();
 
+        if (playerControls.PlayerActions.Parry.WasReleasedThisFrame())
+            onStopParryInput?.Invoke();
+
 
         //Shoot Input Handling
         if (playerControls.PlayerActions.Shoot.triggered)
             onShootInput?.Invoke();
-        
+
+        if (playerControls.PlayerActions.Shoot.WasReleasedThisFrame())
+            onStopShootInput?.Invoke();
+
+        //Melee Input Handling
+        if (playerControls.PlayerActions.Melee.triggered)
+            onMeleeInput?.Invoke();
+    }
+
+    public bool IsParryHold()
+    {
+        return playerControls.PlayerActions.Parry.IsPressed();
+    }
+
+    public bool IsShootHold()
+    {
+        return playerControls.PlayerActions.Shoot.IsPressed();
     }
 }

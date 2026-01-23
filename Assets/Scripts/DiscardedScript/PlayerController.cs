@@ -1,5 +1,4 @@
-using UnityEngine;
-using UnityEngine.Scripting.APIUpdating;
+/*using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
@@ -36,3 +35,4 @@ public class PlayerController : MonoBehaviour
     }
 
 }
+*/

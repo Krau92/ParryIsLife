@@ -10,8 +10,6 @@ public class TestPlayerFeedback : MonoBehaviour
 
     [SerializeField] private SpriteRenderer spriteRenderer;
     private Color originalColor;
-    private float flashTimer = 0f;
-    private float parryCDTimer = 0f;
 
     void OnEnable()
     {
@@ -73,7 +71,6 @@ public class TestPlayerFeedback : MonoBehaviour
     private void StartFlashing(Color flashColor)
     {
         spriteRenderer.color = flashColor;
-        flashTimer = 0f;
     }
 
     private void StopFlashing()

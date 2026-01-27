@@ -8,26 +8,27 @@ public class PlayerParry : MonoBehaviour
     [SerializeField] private float chargedParryIncreaseDuration = 0.3f;
     [SerializeField] private float chargedParryHoldTime = 1.5f;
 
-    PlayerHealth playerHealth;
-    PlayerMovement playerMovement;
+    [SerializeField] private PlayerHealth playerHealth;
+    [SerializeField] private PlayerMovement playerMovement;
 
     //Control Variables
     private float lastParryTime;
     private float parryHoldTimer = 0f;
     public bool IsParrying{ get; private set; } 
 
-    void Awake()
+    void OnEnable()
     {
         InputManager.onParryInput += TryToParry;
         InputManager.onStopParryInput += TryToChargedParry;
 
     }
 
-    void Start()
+    void OnDisable()
     {
-        playerHealth = GetComponent<PlayerHealth>();
-        playerMovement = GetComponent<PlayerMovement>();
+        InputManager.onParryInput -= TryToParry;
+        InputManager.onStopParryInput -= TryToChargedParry;
     }
+
 
     void Update()
     {

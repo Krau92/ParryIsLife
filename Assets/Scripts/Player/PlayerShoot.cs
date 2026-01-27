@@ -56,6 +56,7 @@ public class PlayerShoot : MonoBehaviour
             NewTestBullet bullet = PoolManager.SpawnObject(bulletPrefab, transform.position + shootOffset, Quaternion.identity, PoolManager.PoolType.Bullets);
             bullet.ConfigureBullet(Vector2.up, bulletSpeed, false);
             bullet.ReescaleBullet(finalBulletScale);
+            bullet.ChargedBullet();
         }
         chargedShootTimer = 0f;
     }

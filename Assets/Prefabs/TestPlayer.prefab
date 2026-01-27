@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5339480041568288355}
   - component: {fileID: 397883135015387718}
   - component: {fileID: 7714354770255404014}
+  - component: {fileID: 3526662776429148687}
   m_Layer: 6
   m_Name: MeleeWeapon
   m_TagString: Untagged
@@ -46,6 +47,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 168b043cbaec1834e82b956908af5714, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::MeleeCollisions
+  parent: {fileID: 4459901420735087148}
 --- !u!212 &397883135015387718
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -150,6 +152,33 @@ BoxCollider2D:
   m_AutoTiling: 0
   m_Size: {x: 0.68, y: 0.16}
   m_EdgeRadius: 0
+--- !u!50 &3526662776429148687
+Rigidbody2D:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 729244615275115779}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDamping: 0
+  m_AngularDamping: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 0
 --- !u!1 &1667397163566845340
 GameObject:
   m_ObjectHideFlags: 0
@@ -228,7 +257,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1748655141
   m_SortingLayer: 1
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
@@ -368,7 +397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0808d15d28017584886e079beb7bc751, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerShoot
-  shootCooldown: 0.5
+  shootCooldown: 0.1
   bulletSpeed: 10
   chargedShootTime: 1
   bulletPrefab: {fileID: 2762728212664310726, guid: b6aba5b8f3898f54b97e5faf26dc0b94, type: 3}
@@ -404,6 +433,8 @@ MonoBehaviour:
   parryCooldown: 1
   chargedParryIncreaseDuration: 0.5
   chargedParryHoldTime: 1.5
+  playerHealth: {fileID: 2028814741396964984}
+  playerMovement: {fileID: 5957085209430914116}
 --- !u!114 &5957085209430914116
 MonoBehaviour:
   m_ObjectHideFlags: 0

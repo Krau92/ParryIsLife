@@ -9,10 +9,9 @@ public class PlayerMelee : MonoBehaviour
     [SerializeField] float meleeDuration = 0.75f;
     // [SerializeField] private float meleeCooldown = 1f;
     [SerializeField] private int parriedBulletToCharge = 10;
-    bool attacking = false;
     private int parriedBulletsCount = 0;
     private int currentMeleeChargeLevel = 0;
-    private MeleeCollisions col;
+    public int GetCurrentMeleeChargeLevel() { return currentMeleeChargeLevel; }
 
     void OnEnable()
     {
@@ -28,23 +27,19 @@ public class PlayerMelee : MonoBehaviour
 
     void Start()
     {
-        col = meleeObject.GetComponent<MeleeCollisions>();
         StopMelee();
     }
 
     public void StartMelee()
     {
-        //TODO: Pasar el nivel de carga al daño del melee
-
-        attacking = true;
+        
         meleeObject.SetActive(true);
-        Invoke("StopMelee", meleeDuration);
-        currentMeleeChargeLevel = 0;        
+        Invoke("StopMelee", meleeDuration);   
     }
 
     private void StopMelee()
     {
-        attacking = false;
+        currentMeleeChargeLevel = 0;
         meleeObject.SetActive(false);
     }
 
@@ -52,8 +47,7 @@ public class PlayerMelee : MonoBehaviour
     {
         if (other.CompareTag("Enemy"))
         {
-            //Handle enemy damage based on currentMeleeChargeLevel
-            Debug.Log("Hit enemy with melee at charge level: " + currentMeleeChargeLevel);
+            other.GetComponent<Boss>().RecieveMeleeHit(this);
         }
     }
 
@@ -61,7 +55,6 @@ public class PlayerMelee : MonoBehaviour
     public void CountParriedBullet()
     {
         parriedBulletsCount++;
-        Debug.Log("Parried bullets count: " + parriedBulletsCount);
 
         if (parriedBulletsCount >= parriedBulletToCharge)
         {
@@ -76,7 +69,6 @@ public class PlayerMelee : MonoBehaviour
         if (currentMeleeChargeLevel < maxMeleeChargeLevel)
         {
             currentMeleeChargeLevel++;
-            Debug.Log("Melee charge level increased to: " + currentMeleeChargeLevel);
         }
     }
 

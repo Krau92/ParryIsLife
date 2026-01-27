@@ -5,8 +5,12 @@ using UnityEditor;
 public class PlayerHealth : MonoBehaviour
 {
     [SerializeField] private int maxHealth = 3;
+    public int MaxHealth { get { return maxHealth; } }
+
     [SerializeField] private float inmuneTime = 1.0f;
+
     private int currentHealth;
+    public int CurrentHealth { get { return currentHealth; } }
 
     public static event Action OnParryStart;
     public static event Action OnParryEnd;
@@ -29,6 +33,11 @@ public class PlayerHealth : MonoBehaviour
     //Method to reduce player health
     public void TakeDamage(int damage)
     {
+        //Security check 
+        if(currentHealth <= 0)
+            return; 
+
+
         if (inmune)
         {
             //Player is inmune, no damage taken

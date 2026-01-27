@@ -19,8 +19,13 @@ public class NewTestBullet : MonoBehaviour
     private float deathTimer = 0f;
     const float defaultDeathDuration = 2.0f;
 
+    
+
     private bool reflected;
+    public bool IsReflected() { return reflected; }
+
     private bool charged;
+    public bool IsCharged() { return charged; }
 
     void Awake()
     {
@@ -170,7 +175,6 @@ public class NewTestBullet : MonoBehaviour
     {
         charged = true;
     }
-
 
 
 }

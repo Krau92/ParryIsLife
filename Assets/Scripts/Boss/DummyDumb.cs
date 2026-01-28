@@ -4,6 +4,11 @@ using UnityEngine;
 
 public class DummyDumb : Boss
 {
+    public override void ActivateBoss()
+    {
+        currentCombos = comboPatterns;
+        base.ActivateBoss();
+    }
     public override void RecieveBulletHit(NewTestBullet bullet)
     {
         if (!isDefeated && isActive)
@@ -32,8 +37,6 @@ public class DummyDumb : Boss
         bullet.DeactivateBullet();
     }
 
-
-
     public override void RecieveMeleeHit(PlayerMelee meleeAttack)
     {
         if (isInmune || isDefeated || !isActive)
@@ -42,7 +45,18 @@ public class DummyDumb : Boss
         TakeDamage(3 + meleeAttack.GetCurrentMeleeChargeLevel() * 3);
     }
 
-
+    protected override void ChangeToPhase(int newPhase)
+    {
+        currentPhase = newPhase;
+        switch (currentPhase)
+        {
+            case 0:
+                currentCombos = comboPatterns;
+                break;
+            default:
+                break;
+        }
+    }
 
 
 }

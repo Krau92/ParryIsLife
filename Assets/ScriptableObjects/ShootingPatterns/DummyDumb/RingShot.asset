@@ -17,3 +17,4 @@ MonoBehaviour:
   bulletAmount: 200
   numberOfBursts: 1
   burstCooldown: 0
+  prefabBullet: {fileID: 2762728212664310726, guid: b6aba5b8f3898f54b97e5faf26dc0b94, type: 3}

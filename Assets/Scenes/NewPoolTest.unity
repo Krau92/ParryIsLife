@@ -700,10 +700,10 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 19.71
+  m_fontSize: 18
   m_fontSizeBase: 19.71
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
@@ -799,6 +799,14 @@ PrefabInstance:
     - target: {fileID: 2189558053603205828, guid: 12f4b53398652014d8ccf20f87148d4c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459901420735087148, guid: 12f4b53398652014d8ccf20f87148d4c, type: 3}
+      propertyPath: meleeCooldown
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4459901420735087148, guid: 12f4b53398652014d8ccf20f87148d4c, type: 3}
+      propertyPath: meleeDuration
+      value: 0.2
       objectReference: {fileID: 0}
     - target: {fileID: 5957085209430914116, guid: 12f4b53398652014d8ccf20f87148d4c, type: 3}
       propertyPath: mainCamera
@@ -1398,13 +1406,21 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4638576766555866401, guid: 776c2b1497c86414e84eeccf1731da4f, type: 3}
+      propertyPath: comboPatterns.Array.data[0].waitBetweenCombosTime
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4638576766555866401, guid: 776c2b1497c86414e84eeccf1731da4f, type: 3}
+      propertyPath: comboPatterns.Array.data[1].waitBetweenCombosTime
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5651394535440870094, guid: 776c2b1497c86414e84eeccf1731da4f, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5651394535440870094, guid: 776c2b1497c86414e84eeccf1731da4f, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.79
+      value: 2.59
       objectReference: {fileID: 0}
     - target: {fileID: 5651394535440870094, guid: 776c2b1497c86414e84eeccf1731da4f, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1441,22 +1457,6 @@ PrefabInstance:
     - target: {fileID: 7249036215693938254, guid: 776c2b1497c86414e84eeccf1731da4f, type: 3}
       propertyPath: m_Name
       value: DummyDumb
-      objectReference: {fileID: 0}
-    - target: {fileID: 8632298979389398120, guid: 776c2b1497c86414e84eeccf1731da4f, type: 3}
-      propertyPath: m_Size.x
-      value: 1.67
-      objectReference: {fileID: 0}
-    - target: {fileID: 8632298979389398120, guid: 776c2b1497c86414e84eeccf1731da4f, type: 3}
-      propertyPath: m_Size.y
-      value: 0.72242445
-      objectReference: {fileID: 0}
-    - target: {fileID: 8632298979389398120, guid: 776c2b1497c86414e84eeccf1731da4f, type: 3}
-      propertyPath: m_Offset.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8632298979389398120, guid: 776c2b1497c86414e84eeccf1731da4f, type: 3}
-      propertyPath: m_Offset.y
-      value: -0.1671162
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

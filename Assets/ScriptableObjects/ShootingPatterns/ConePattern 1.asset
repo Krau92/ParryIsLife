@@ -10,11 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 0e8df1bcf7afbf94cb3aeb7a9ec6e648, type: 3}
-  m_Name: ConePattern
+  m_Name: ConePattern 1
   m_EditorClassIdentifier: Assembly-CSharp::ConePatternSO
-  bulletSpeed: 5
+  bulletSpeed: 6
   rotationSpeed: 0
-  bulletAmount: 5
+  bulletAmount: 4
   numberOfBursts: 8
   burstCooldown: 0.1
+  prefabBullet: {fileID: 2762728212664310726, guid: b6aba5b8f3898f54b97e5faf26dc0b94, type: 3}
   coneAngle: 70

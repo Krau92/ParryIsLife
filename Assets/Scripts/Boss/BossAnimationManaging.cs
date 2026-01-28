@@ -9,21 +9,32 @@ public class BossAnimationManaging : MonoBehaviour
         bossAnimator.SetBool("Active", true);
         bossAnimator.SetBool("Dead", false);
         bossAnimator.SetBool("Inmune", true);
+        bossAnimator.SetBool("Attacking", false);
     }
 
-    public void SetBossPhase(int phase)
+    public void StartAttacking()
     {
-        bossAnimator.SetInteger("BossPhase", phase);
+        bossAnimator.SetBool("Attacking", true);
+    }
+
+    public void SetBossAnimation(int anim)
+    {
+        bossAnimator.SetInteger("Animation", anim);
     }
 
     public void SetDead()
     {
         bossAnimator.SetBool("Dead", true);
-
+        bossAnimator.SetBool("Attacking", false);
     }
 
     public void SetInmune(bool inmune)
     {
         bossAnimator.SetBool("Inmune", inmune);
+    }
+
+    public void StopAttacking()
+    {
+        bossAnimator.SetBool("Attacking", false);
     }
 }

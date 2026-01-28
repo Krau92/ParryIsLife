@@ -9,6 +9,7 @@ public abstract class ShootingPatternSO : ScriptableObject
     public int bulletAmount;
     public int numberOfBursts;
     public float burstCooldown;
+    public NewTestBullet prefabBullet;
 
     //Coroutine to handle shooting bursts
 

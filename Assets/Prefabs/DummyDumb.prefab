@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 1205289458347897671}
   - component: {fileID: 3983925744951244008}
   - component: {fileID: 4638576766555866401}
-  - component: {fileID: 8171946948186607698}
   - component: {fileID: 7396154775169397292}
   - component: {fileID: 7505597226260964158}
   - component: {fileID: 8632298979389398120}
@@ -34,7 +33,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 3.18, z: 0}
-  m_LocalScale: {x: 3.44, y: 3.44, z: 3.44}
+  m_LocalScale: {x: 3, y: 3, z: 3}
   m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
@@ -86,7 +85,7 @@ SpriteRenderer:
   m_SortingLayerID: 1892534313
   m_SortingLayer: 2
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: e7ee04e5bf33f214e9723f20420f2d7a, type: 3}
+  m_Sprite: {fileID: -311952393, guid: 9d232ab36cf4c2e4fb66d4c5e6fa8ede, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -127,26 +126,36 @@ MonoBehaviour:
   phasesData:
   - phaseName: Test
     healthThreshold: 100
+  comboPatterns:
+  - comboName: Double cone
+    shootingPatterns:
+    - shootingPattern: {fileID: 11400000, guid: 7103216e648254e49803f968a1aa422d, type: 2}
+      shootOrigin: {fileID: 5651394535440870094}
+      waitTime: 2
+    - shootingPattern: {fileID: 11400000, guid: 7103216e648254e49803f968a1aa422d, type: 2}
+      shootOrigin: {fileID: 5651394535440870094}
+      waitTime: 0
+    animationIndex: 0
+    waitBetweenCombosTime: 1.5
+  - comboName: Cone + ring
+    shootingPatterns:
+    - shootingPattern: {fileID: 11400000, guid: 7103216e648254e49803f968a1aa422d, type: 2}
+      shootOrigin: {fileID: 5651394535440870094}
+      waitTime: 0.01
+    - shootingPattern: {fileID: 11400000, guid: 05fd44874f47a89489336e58b22576f7, type: 2}
+      shootOrigin: {fileID: 5651394535440870094}
+      waitTime: 0
+    animationIndex: 1
+    waitBetweenCombosTime: 1.5
+  - comboName: Single ring
+    shootingPatterns:
+    - shootingPattern: {fileID: 11400000, guid: 05fd44874f47a89489336e58b22576f7, type: 2}
+      shootOrigin: {fileID: 5651394535440870094}
+      waitTime: 0
+    animationIndex: 1
+    waitBetweenCombosTime: 3
   vulnerabilityDuration: 5
---- !u!114 &8171946948186607698
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7249036215693938254}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fa03f0cf3e41104699909d2b1470a4f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::TestEnemyShooting
-  shootOffset: {x: 0, y: 0}
-  shootingPatterns:
-  - {fileID: 11400000, guid: 05fd44874f47a89489336e58b22576f7, type: 2}
-  - {fileID: 11400000, guid: 7103216e648254e49803f968a1aa422d, type: 2}
-  bulletPrefab: {fileID: 2762728212664310726, guid: b6aba5b8f3898f54b97e5faf26dc0b94, type: 3}
-  spawnPositions:
-  - {fileID: 5651394535440870094}
+  timeToStartAttacking: 2
 --- !u!111 &7396154775169397292
 Animation:
   m_ObjectHideFlags: 0
@@ -219,17 +228,17 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: -0.002707243, y: 0.08734338}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 1.66, y: 1.37}
+    oldSize: {x: 0.43, y: 0.74}
     newSize: {x: 0.79, y: 0.74}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1.66, y: 1.37}
+  m_Size: {x: 0.35438973, y: 0.5708314}
   m_EdgeRadius: 0
 --- !u!50 &5393628106589856466
 Rigidbody2D:

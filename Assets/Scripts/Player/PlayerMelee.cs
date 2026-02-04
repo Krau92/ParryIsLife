@@ -18,13 +18,13 @@ public class PlayerMelee : MonoBehaviour
 
     void OnEnable()
     {
-        PlayerHealth.OnParriedBullet += CountParriedBullet;
+        CombatEvents.OnParriedBullet += CountParriedBullet;
         InputManager.onMeleeInput += StartMelee;
     }
 
     void OnDisable()
     {
-        PlayerHealth.OnParriedBullet -= CountParriedBullet;
+        CombatEvents.OnParriedBullet -= CountParriedBullet;
         InputManager.onMeleeInput -= StartMelee;
     }
 
@@ -62,6 +62,7 @@ public class PlayerMelee : MonoBehaviour
     {
         if (other.CompareTag("Enemy") && !alreadyHit)
         {
+            CombatEvents.OnMeleeHit?.Invoke(currentMeleeChargeLevel);
             alreadyHit = true;
             other.GetComponent<Boss>().RecieveMeleeHit(this);
         }

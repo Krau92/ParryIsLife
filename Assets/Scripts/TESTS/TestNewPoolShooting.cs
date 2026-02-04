@@ -60,7 +60,7 @@ public class TestNewPoolShooting : MonoBehaviour
             NewTestBullet obj = PoolManager.SpawnObject(bulletPrefab, parent, Quaternion.identity, PoolManager.PoolType.Bullets);
             float angleOffset = baseAngle - spreadAngle / 2 + (spreadAngle / (bulletsPerShot - 1)) * i;
             Vector2 direction = new Vector2(Mathf.Cos(angleOffset), Mathf.Sin(angleOffset));  
-            obj.ConfigureBullet(direction, bulletSpeed, true, (Vector2)parent.position);
+            obj.ConfigureBullet(direction, bulletSpeed, true, true, (Vector2)parent.position);
         }
     }
 }

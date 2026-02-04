@@ -9,6 +9,7 @@ public class BossPhaseData
 {
     public string phaseName; //To organize and make easier to identify
     public float healthThreshold;
+    public List<int> availableCombosIndexes;
 }
 
 [Serializable]
@@ -31,15 +32,35 @@ public class BossComboPattern
 
 public abstract class Boss : MonoBehaviour
 {
+    [Header("Setting up")]
     [SerializeField] protected BossAnimationManaging animationManager;
     protected Transform playerTransform;
+    
+    [SerializeField] protected float timeToStartAttacking = 2f;
+    [SerializeField] int[] threatLevelThresholds = new int[3];
+    public int[] ThreatLevelThresholds { get { return threatLevelThresholds; } }
+
+    [Header("Boss Stats")]
     [SerializeField] protected int maxHealth;
     public int MaxHealth { get { return maxHealth; } }
-    [SerializeField] protected List<BossPhaseData> phasesData;
-    [SerializeField] protected List<BossComboPattern> comboPatterns;
+    [SerializeField] protected int initBulletStunCounter = 5;
     [SerializeField] protected float vulnerabilityDuration = 5f;
 
-    [SerializeField] protected float timeToStartAttacking = 2f;
+    [Header("Phases and Combos")]
+    [SerializeField] protected List<BossPhaseData> phasesData;
+    [SerializeField] protected List<BossComboPattern> comboPatterns;
+
+
+    [Header("Damage Settings")]
+    [SerializeField] protected float stunDmgMultiplier = 2.5f;
+    [SerializeField] protected int bulletBaseDmg = 1;
+    [SerializeField] protected int chargedBulletDmg = 2;
+    [SerializeField] protected int reflectedBulletDmg = 1;
+    [SerializeField] protected int[] meleeLvlDmg = new int[4];
+
+
+    protected int currentBulletStunCounter;
+    protected float dmgMultiplier = 1f;
     
     protected int numberOfPhases;
     protected int currentPhase;
@@ -63,9 +84,10 @@ public abstract class Boss : MonoBehaviour
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
         numberOfPhases = phasesData.Count;
         currentHealth = maxHealth;
-        currentPhase = 0;
+        ChangeToPhase(0); //Start in phase 0
         currentPatternIndex = 0;
         currentComboIndex = 0;
+        currentBulletStunCounter = initBulletStunCounter;
         isActive = false;
         isDefeated = false;
         isInmune = true;
@@ -90,7 +112,7 @@ public abstract class Boss : MonoBehaviour
         }
     }
 
-    protected void StopBossBehavior()
+    protected virtual void StopBossBehavior()
     {
         if (bossBehaviorCoroutine != null)
         {
@@ -111,35 +133,30 @@ public abstract class Boss : MonoBehaviour
 
         while (isActive && !isDefeated)
         {
-            // === STATE: PreparingShoot ===
             PrepareShootState();
             yield return null; 
 
-            // === STATE: ExecutingAnimation ===
-            // Iniciamos la animación que eventualmente llamará a ShootCombo() por evento
-            comboFinished = false; // Reseteamos flag
-            SetAnimation();
+            comboFinished = false; // Reseteamos flag para entrar limpio a la animación y que pueda lanzar el combo
+            animationManager.StartAttacking();
             
-            // === STATE: ShootingCombo ===
-            // Esperamos a que el combo termine (activado y gestionado por ShootComboRoutine llamado desde evento)
-            
-            // Esperamos hasta que ShootComboRoutine marque comboFinished = true
-            // OPCIONAL: TimeOut de seguridad por si el evento de animación nunca salta podría añadirse aquí
+            //Aqui esperamos a que la animación dispare todo el combo
             yield return new WaitUntil(() => comboFinished);
 
-            // === STATE: ChoosingNextCombo ===
-            PrepareNextComboState();
-            
             BossComboPattern currentCombo = currentCombos[currentComboIndex];
             yield return new WaitForSeconds(currentCombo.waitBetweenCombosTime);
+
+            PrepareNextComboState();
+                        
         }
     }
 
     public void SetVulnerable()
     {
+        CombatEvents.OnEnemyStunned?.Invoke();
         isInmune = false;
         animationManager.SetInmune(isInmune);
-        animationManager.StopAttacking();
+        dmgMultiplier = stunDmgMultiplier;
+        StopAttacking();
         StopBossBehavior();
     }
 
@@ -147,30 +164,32 @@ public abstract class Boss : MonoBehaviour
     {
         isInmune = true;
         animationManager.SetInmune(isInmune);
+        currentBulletStunCounter = initBulletStunCounter;
+        dmgMultiplier = 1f;
         StartBossBehavior();
     }
 
-    public void TakeDamage(int damage)
+    public void TakeDamage(float damage)
     {
         //Double check, maybe not necessary
-        if (isDefeated || !isActive || isInmune)
+        if (isDefeated || !isActive)
             return;
-
-        currentHealth -= damage;
-
-        Debug.Log("Boss took damage: " + damage + ", current health: " + currentHealth);
+        int intDamage = Mathf.RoundToInt(damage);
+        currentHealth -= intDamage;
+        CombatEvents.OnBossDamaged?.Invoke();
 
         CheckChangingPhase();
 
         if (currentHealth <= 0)
         {
+            StopAttacking();
             StopBossBehavior();
-            animationManager.StopAttacking();
             isDefeated = true;
             currentHealth = 0;
             animationManager.SetDead();
 
-            Debug.Log("Boss Defeated");
+            CombatEvents.OnBossDefeated?.Invoke();
+
         }
     }
 
@@ -179,28 +198,45 @@ public abstract class Boss : MonoBehaviour
         if (currentPhase >= phasesData.Count - 1) return;
 
         BossPhaseData nextPhase = phasesData[currentPhase + 1];
+        int healthThreshold = Mathf.RoundToInt(maxHealth * nextPhase.healthThreshold / 100f);
 
-        if (currentHealth <= nextPhase.healthThreshold)
+        if (currentHealth <= healthThreshold)
         {
             ChangeToPhase(currentPhase + 1);
         }
     }
 
-    //!This is the method to override to prepare the current patterns/combos for each phase for each specific boss
-    protected abstract void ChangeToPhase(int newPhase);
+    protected void ChangeToPhase(int newPhase)
+    {
+        StopAttacking();
+        StopBossBehavior();
+        currentPhase = newPhase;
+        BossPhaseData phaseData = phasesData[currentPhase];
+        List<BossComboPattern> newCombos = new List<BossComboPattern>();
+
+        foreach (int comboIndex in phaseData.availableCombosIndexes)
+        {
+            if (comboIndex >= 0 && comboIndex < comboPatterns.Count)
+            {
+                newCombos.Add(comboPatterns[comboIndex]);
+            }
+        }
+
+        currentCombos = newCombos;
+        currentComboIndex = 0;
+        currentPatternIndex = 0;
+
+        StartBossBehavior();
+    }
 
     protected virtual void PrepareShootState()
     {
         if (currentCombos != null && currentCombos.Count > currentComboIndex)
         {
+            currentPatternIndex = 0;
+            StopAttacking();
             animationManager.SetBossAnimation(currentCombos[currentComboIndex].animationIndex);
-            animationManager.StopAttacking();
         }
-    }
-
-    protected virtual void SetAnimation()
-    {
-        animationManager.StartAttacking();
     }
 
     // Método llamado por EVENTO DE ANIMACIÓN
@@ -217,7 +253,7 @@ public abstract class Boss : MonoBehaviour
         BossComboPattern currentCombo = currentCombos[currentComboIndex];
         currentPatternIndex = 0;
 
-        while (currentPatternIndex < currentCombo.shootingPatterns.Count)
+        while (currentPatternIndex < currentCombo.shootingPatterns.Count && isInmune)
         {
             BossPattern currentData = currentCombo.shootingPatterns[currentPatternIndex];
             ShootingPatternSO currentPattern = currentData.shootingPattern;
@@ -229,11 +265,9 @@ public abstract class Boss : MonoBehaviour
             );
 
             yield return new WaitForSeconds(currentData.waitTime);
-            isAttacking = false;
             currentPatternIndex++;
         }
-
-        isAttacking = false;
+        StopAttacking();
         comboFinished = true; // Notificamos al bucle principal que hemos terminado
         shootingCoroutine = null;
     }
@@ -257,6 +291,17 @@ public abstract class Boss : MonoBehaviour
             NewTestBullet bullet = collision.gameObject.GetComponent<NewTestBullet>();
             RecieveBulletHit(bullet);
         }
+    }
+
+    protected void StopAttacking()
+    {
+        isAttacking = false;
+        animationManager.StopAttacking();
+    }
+
+    public float GetHealthPercentage()
+    {
+        return (float)currentHealth / maxHealth;
     }
 
 

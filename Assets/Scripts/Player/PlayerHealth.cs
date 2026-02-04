@@ -1,6 +1,5 @@
 using UnityEngine;
 using System;
-using UnityEditor;
 
 public class PlayerHealth : MonoBehaviour
 {
@@ -11,13 +10,6 @@ public class PlayerHealth : MonoBehaviour
 
     private int currentHealth;
     public int CurrentHealth { get { return currentHealth; } }
-
-    public static event Action OnParryStart;
-    public static event Action OnParryEnd;
-    public static event Action OnReflectingStart;
-    public static event Action OnReflectingEnd;
-    public static event Action OnDamageTaken;
-    public static event Action OnParriedBullet;
 
     bool inmune;
     bool parrying;
@@ -45,11 +37,13 @@ public class PlayerHealth : MonoBehaviour
         }
 
         currentHealth -= damage;
+        CombatEvents.OnDamageTaken?.Invoke();
 
         SetInmune(inmuneTime);
 
         if (currentHealth <= 0)
         {
+            CombatEvents.OnPlayerDeath?.Invoke();
             //Handle player death
         }
     }
@@ -63,24 +57,25 @@ public class PlayerHealth : MonoBehaviour
             if (reflecting)
             {
                 
-                OnParriedBullet?.Invoke();
+                CombatEvents.OnParriedBullet?.Invoke();
                 //Reflect the bullet
                 bullet.ReflectBullet(transform.position);
                 return;
             }
 
-            bullet.DeactivateBullet();
             
             if (inmune)
             {
                 if(parrying)
-                    OnParriedBullet?.Invoke();
+                    CombatEvents.OnParriedBullet?.Invoke();
+                    
+                    bullet.ParriedBullet(transform.position);
                 
                 return;
             }
-            TakeDamage(1);
             
-            OnDamageTaken?.Invoke();
+            bullet.DeactivateBullet();
+            TakeDamage(1);
 
         } else if (other.gameObject.CompareTag("Enemy"))
         {
@@ -92,7 +87,7 @@ public class PlayerHealth : MonoBehaviour
 
             TakeDamage(1);
             
-            OnDamageTaken?.Invoke();
+            CombatEvents.OnDamageTaken?.Invoke();
         }
 
 
@@ -107,7 +102,7 @@ public class PlayerHealth : MonoBehaviour
         inmune = true;
         Invoke("ResetInmune", duration);
 
-        OnParryStart?.Invoke();
+        CombatEvents.OnParryStart?.Invoke();
         
     }
 
@@ -115,25 +110,27 @@ public class PlayerHealth : MonoBehaviour
     {
         reflecting = true;
         Invoke("ResetReflecting", duration);
-        OnReflectingStart?.Invoke();
+        CombatEvents.OnReflectingStart?.Invoke();
     }
 
     private void ResetInmune()
     {
         inmune = false;
-        OnParryEnd?.Invoke();
+        CombatEvents.OnParryEnd?.Invoke();
     }
 
     private void ResetReflecting()
     {
         reflecting = false;
-        OnReflectingEnd?.Invoke();
+        CombatEvents.OnReflectingEnd?.Invoke();
     }
 
     public void SetParrying(float parryDuration)
     {
         parrying = true;
         SetInmune(parryDuration);
+        //Set reflecting
+        // SetReflecting(parryDuration);
         Invoke("ResetParrying", parryDuration);
     }
 

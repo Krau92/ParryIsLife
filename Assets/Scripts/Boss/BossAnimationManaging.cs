@@ -14,6 +14,7 @@ public class BossAnimationManaging : MonoBehaviour
 
     public void StartAttacking()
     {
+        Debug.Log("Boss starts attacking animation.");
         bossAnimator.SetBool("Attacking", true);
     }
 
@@ -35,6 +36,7 @@ public class BossAnimationManaging : MonoBehaviour
 
     public void StopAttacking()
     {
+        Debug.Log("Boss stops attacking animation.");
         bossAnimator.SetBool("Attacking", false);
     }
 }

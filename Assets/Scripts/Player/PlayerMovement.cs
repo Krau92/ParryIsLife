@@ -6,6 +6,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Movement Settings")]
     [SerializeField] private float defaultSpeed = 80f;
     [SerializeField] private float slowdownFactor = 0.5f;
+    [SerializeField] private GameState requiredState = GameState.InCombat;
     private bool slowed = false;
     private Vector2 playerSize;
     private SpriteRenderer spriteRenderer;
@@ -50,6 +51,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(GameManager.Instance.currentGameState != requiredState)
+            return;
+            
         Move();
     }
 

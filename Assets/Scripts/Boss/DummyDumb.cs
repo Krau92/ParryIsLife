@@ -1,13 +1,16 @@
 using System;
 using System.Collections.Generic;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class DummyDumb : Boss
 {
+
     public override void ActivateBoss()
     {
         currentCombos = comboPatterns;
         base.ActivateBoss();
+        currentBulletStunCounter = initBulletStunCounter;
     }
     public override void RecieveBulletHit(NewTestBullet bullet)
     {
@@ -17,21 +20,23 @@ public class DummyDumb : Boss
             {
                 if (bullet.IsReflected())
                 {
-                    SetVulnerable();
-                    Invoke("SetInmune", vulnerabilityDuration);
+                    currentBulletStunCounter--;
+                    if (currentBulletStunCounter <= 0)
+                    {
+                        SetVulnerable();
+                        Invoke("SetInmune", vulnerabilityDuration);
+                    }
                 }
-                bullet.DeactivateBullet();
-                return;
-            }
+            } 
 
             //Handling damages
-            TakeDamage(1);
+            TakeDamage(bulletBaseDmg * dmgMultiplier);
 
             if (bullet.IsCharged())
-                TakeDamage(4);
+                TakeDamage(chargedBulletDmg * dmgMultiplier);
 
             if (bullet.IsReflected())
-                TakeDamage(1);
+                TakeDamage(reflectedBulletDmg * dmgMultiplier);
         }
 
         bullet.DeactivateBullet();
@@ -39,23 +44,17 @@ public class DummyDumb : Boss
 
     public override void RecieveMeleeHit(PlayerMelee meleeAttack)
     {
-        if (isInmune || isDefeated || !isActive)
+        if (isDefeated || !isActive)
             return;
 
-        TakeDamage(3 + meleeAttack.GetCurrentMeleeChargeLevel() * 3);
+        TakeDamage(meleeLvlDmg[meleeAttack.GetCurrentMeleeChargeLevel()] * dmgMultiplier);
     }
 
-    protected override void ChangeToPhase(int newPhase)
+    protected override void StopBossBehavior()
     {
-        currentPhase = newPhase;
-        switch (currentPhase)
-        {
-            case 0:
-                currentCombos = comboPatterns;
-                break;
-            default:
-                break;
-        }
+        base.StopBossBehavior();
+        currentComboIndex = 0;
+        currentPatternIndex = 0;
     }
 
 

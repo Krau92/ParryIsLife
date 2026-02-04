@@ -140,5 +140,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9effd01e10411ad4088fdbe97b8d92ab, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NewTestBullet
+  spriteRenderer: {fileID: 2244864104513267338}
   playerBulletLayer: 8
   enemyBulletLayer: 10

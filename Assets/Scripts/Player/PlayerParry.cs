@@ -8,6 +8,8 @@ public class PlayerParry : MonoBehaviour
     [SerializeField] private float chargedParryIncreaseDuration = 0.3f;
     [SerializeField] private float chargedParryHoldTime = 1.5f;
 
+    public float amountParryCharged { get { return parryHoldTimer / chargedParryHoldTime; } }
+
     [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private PlayerMovement playerMovement;
 
@@ -86,8 +88,6 @@ public class PlayerParry : MonoBehaviour
 
             playerHealth.SetParrying(parryDuration + chargedParryIncreaseDuration);
             playerHealth.SetReflecting(parryDuration + chargedParryIncreaseDuration);
-
-            //TODO: Manager returning projectiles. Maybe create new bullet coloured?
         }
     }
 }

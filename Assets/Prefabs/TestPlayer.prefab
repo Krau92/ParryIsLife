@@ -140,7 +140,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0, y: 0.08}
   m_SpriteTilingProperty:
     border: {x: 0.049999997, y: 0.049999997, z: 0.049999997, w: 0.049999997}
     pivot: {x: 0.5, y: 0.5}
@@ -150,7 +150,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 0.68, y: 0.16}
+  m_Size: {x: 1.0150826, y: 0.28}
   m_EdgeRadius: 0
 --- !u!50 &3526662776429148687
 Rigidbody2D:
@@ -383,7 +383,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMelee
   meleeObject: {fileID: 729244615275115779}
   maxMeleeChargeLevel: 3
-  meleeDuration: 0.3
+  meleeDuration: 0.2
+  meleeCooldown: 0.5
   parriedBulletToCharge: 10
 --- !u!114 &1135118158604202397
 MonoBehaviour:
@@ -429,10 +430,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e18d109e73655e946b84cfc97af5b31f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCombat
-  parryDuration: 0.3
-  parryCooldown: 1
+  parryDuration: 0.15
+  parryCooldown: 0.5
   chargedParryIncreaseDuration: 0.5
-  chargedParryHoldTime: 1.5
+  chargedParryHoldTime: 1.25
   playerHealth: {fileID: 2028814741396964984}
   playerMovement: {fileID: 5957085209430914116}
 --- !u!114 &5957085209430914116
@@ -449,6 +450,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   defaultSpeed: 60
   slowdownFactor: 0.5
+  requiredState: 2
   mainCamera: {fileID: 0}
 --- !u!50 &2518324608663349931
 Rigidbody2D:

@@ -7,6 +7,8 @@ public class NewTestBullet : MonoBehaviour
     private float radius;
     private float angle;
 
+    [SerializeField] private SpriteRenderer spriteRenderer;
+
     [SerializeField] private int playerBulletLayer = 0; // set in Inspector to the PlayerBullet layer index
     [SerializeField] private int enemyBulletLayer = 0;  // set in Inspector to the EnemyBullet layer index
 
@@ -19,6 +21,8 @@ public class NewTestBullet : MonoBehaviour
     private float deathTimer = 0f;
     const float defaultDeathDuration = 2.0f;
 
+    private bool parreable = false;
+    public bool IsParreable() { return parreable; }
     
 
     private bool reflected;
@@ -54,8 +58,9 @@ public class NewTestBullet : MonoBehaviour
         transform.position = origin + direction * radius;
     }
 
-    public void ConfigureBullet(Vector2 dir, float spd, bool enemyBullet, Vector2 newOrigin = default)
+    public void ConfigureBullet(Vector2 dir, float spd, bool enemyBullet, bool parreableBullet = false, Vector2 newOrigin = default)
     {
+        SetParreable(parreableBullet);
         reflected = false;
         deathTimer = defaultDeathDuration;
         if (newOrigin == default)
@@ -72,8 +77,9 @@ public class NewTestBullet : MonoBehaviour
         Invoke("DeactivateBullet", deathTimer);
     }
 
-    public void ConfigureBullet(Vector2 dir, float spd, bool enemyBullet, float deathTime)
+    public void ConfigureBullet(Vector2 dir, float spd, bool enemyBullet, float deathTime, bool parreableBullet = false)
     {
+        SetParreable(parreableBullet);
         reflected = false;
         deathTimer = deathTime;
         SetOrigin();
@@ -85,6 +91,19 @@ public class NewTestBullet : MonoBehaviour
         CancelInvoke("DeactivateBullet");
         Invoke("DeactivateBullet", deathTimer);
 
+    }
+
+    private void SetParreable(bool parreableBullet)
+    {
+        parreable = parreableBullet;
+        if(parreable)
+        {
+            spriteRenderer.color = Color.indigo; // Change color to indicate parreable
+        }
+        else
+        {
+            spriteRenderer.color = Color.white; // Reset color if not parreable
+        }
     }
 
     private void SetOrigin()
@@ -132,6 +151,7 @@ public class NewTestBullet : MonoBehaviour
 
     public void ReflectBullet(Vector2 newOrigin)
     {
+        CombatEvents.OnReflectedBullet?.Invoke();
         reflected = true;
         Vector2 newDirection = -direction;
 
@@ -154,6 +174,15 @@ public class NewTestBullet : MonoBehaviour
 
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.color = Color.yellow; // Change color to indicate reflection
+    }
+
+    public void ParriedBullet(Vector2 newOrigin)
+    {
+        CombatEvents.OnParriedBullet?.Invoke();
+        if(parreable)
+            ReflectBullet(newOrigin);
+        else
+            DeactivateBullet();
     }
 
     public void ReescaleBullet(float scaleFactor)

@@ -13,20 +13,20 @@ public class TestPlayerFeedback : MonoBehaviour
 
     void OnEnable()
     {
-        PlayerHealth.OnParryStart += FlashOnParry;
-        PlayerHealth.OnParryEnd += StopFlashing;
-        PlayerHealth.OnReflectingStart += FlashOnReflect;
-        PlayerHealth.OnReflectingEnd += StopFlashing;
-        PlayerHealth.OnDamageTaken += FlashOnDamage;
+        CombatEvents.OnParryStart += FlashOnParry;
+        CombatEvents.OnParryEnd += StopFlashing;
+        CombatEvents.OnReflectingStart += FlashOnReflect;
+        CombatEvents.OnReflectingEnd += StopFlashing;
+        CombatEvents.OnDamageTaken += FlashOnDamage;
     }
 
     void OnDisable()
     {
-        PlayerHealth.OnParryStart -= FlashOnParry;
-        PlayerHealth.OnParryEnd -= StopFlashing;
-        PlayerHealth.OnReflectingStart -= FlashOnReflect;
-        PlayerHealth.OnReflectingEnd -= StopFlashing;
-        PlayerHealth.OnDamageTaken -= FlashOnDamage;
+        CombatEvents.OnParryStart -= FlashOnParry;
+        CombatEvents.OnParryEnd -= StopFlashing;
+        CombatEvents.OnReflectingStart -= FlashOnReflect;
+        CombatEvents.OnReflectingEnd -= StopFlashing;
+        CombatEvents.OnDamageTaken -= FlashOnDamage;
     }
 
     void Awake()

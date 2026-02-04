@@ -7,10 +7,12 @@ public class TestUI : MonoBehaviour
     [SerializeField] private Boss boss;
     [SerializeField] private PlayerMelee playerMelee;
     [SerializeField] private PlayerHealth playerHealth;
+    [SerializeField] private PlayerParry playerParry;
 
 
     [SerializeField] Image bossHealthBarFill;
     [SerializeField] Image playerHealthBarFill;
+    [SerializeField] Image parryChargeBarFill;
     [SerializeField] TMP_Text lvlMelee;
 
 
@@ -31,6 +33,12 @@ public class TestUI : MonoBehaviour
         {
             float healthPercentage = (float)playerHealth.CurrentHealth / playerHealth.MaxHealth;
             playerHealthBarFill.fillAmount = healthPercentage;
+        }
+
+        if (playerParry != null && parryChargeBarFill != null)
+        {
+            float parryChargeAmount = playerParry.amountParryCharged;
+            parryChargeBarFill.fillAmount = parryChargeAmount;
         }
     }
 }

@@ -9,6 +9,7 @@ public abstract class ShootingPatternSO : ScriptableObject
     public int bulletAmount;
     public int numberOfBursts;
     public float burstCooldown;
+    public bool IsParreable;
     public NewTestBullet prefabBullet;
 
     //Coroutine to handle shooting bursts
@@ -25,7 +26,7 @@ public abstract class ShootingPatternSO : ScriptableObject
     //Sets the shooting pattern parameters and assign the owner layer of the bullet
     protected void SetBulletParameters(NewTestBullet bullet, Vector2 shootOrigin, Vector2 bulletDirection)
     {
-        bullet.ConfigureBullet(bulletDirection, bulletSpeed, true, shootOrigin);
+        bullet.ConfigureBullet(bulletDirection, bulletSpeed, true, IsParreable, shootOrigin);
         bullet.SetCircularSpeed(rotationSpeed);
         
 
@@ -33,7 +34,7 @@ public abstract class ShootingPatternSO : ScriptableObject
 
     protected void SetBulletParameters(NewTestBullet bullet, Vector2 bulletDirection)
     {
-        bullet.ConfigureBullet(bulletDirection, bulletSpeed, true);
+        bullet.ConfigureBullet(bulletDirection, bulletSpeed, true, IsParreable);
         bullet.SetCircularSpeed(rotationSpeed);
     }
 

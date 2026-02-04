@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1205289458347897671}
   - component: {fileID: 3983925744951244008}
   - component: {fileID: 4638576766555866401}
+  - component: {fileID: 8643006798294377138}
   - component: {fileID: 7396154775169397292}
   - component: {fileID: 7505597226260964158}
   - component: {fileID: 8632298979389398120}
@@ -122,10 +123,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DummyDumb
   animationManager: {fileID: 3983925744951244008}
-  maxHealth: 200
+  timeToStartAttacking: 2
+  threatLevelThresholds: 0f000000280000003c000000
+  maxHealth: 700
+  initBulletStunCounter: 5
+  vulnerabilityDuration: 2.5
   phasesData:
   - phaseName: Test
     healthThreshold: 100
+    availableCombosIndexes: 0000000001000000
   comboPatterns:
   - comboName: Double cone
     shootingPatterns:
@@ -134,28 +140,71 @@ MonoBehaviour:
       waitTime: 2
     - shootingPattern: {fileID: 11400000, guid: 7103216e648254e49803f968a1aa422d, type: 2}
       shootOrigin: {fileID: 5651394535440870094}
-      waitTime: 0
+      waitTime: 0.01
     animationIndex: 0
-    waitBetweenCombosTime: 1.5
-  - comboName: Cone + ring
+    waitBetweenCombosTime: 1
+  - comboName: Cone + ring and ring
     shootingPatterns:
     - shootingPattern: {fileID: 11400000, guid: 7103216e648254e49803f968a1aa422d, type: 2}
       shootOrigin: {fileID: 5651394535440870094}
       waitTime: 0.01
     - shootingPattern: {fileID: 11400000, guid: 05fd44874f47a89489336e58b22576f7, type: 2}
       shootOrigin: {fileID: 5651394535440870094}
-      waitTime: 0
-    animationIndex: 1
-    waitBetweenCombosTime: 1.5
-  - comboName: Single ring
-    shootingPatterns:
+      waitTime: 1
     - shootingPattern: {fileID: 11400000, guid: 05fd44874f47a89489336e58b22576f7, type: 2}
       shootOrigin: {fileID: 5651394535440870094}
-      waitTime: 0
+      waitTime: 1.5
     animationIndex: 1
-    waitBetweenCombosTime: 3
-  vulnerabilityDuration: 5
-  timeToStartAttacking: 2
+    waitBetweenCombosTime: 1.5
+  stunDmgMultiplier: 2.5
+  bulletBaseDmg: 1
+  chargedBulletDmg: 8
+  reflectedBulletDmg: 3
+  meleeLvlDmg: 030000000a0000001e0000003c000000
+--- !u!114 &8643006798294377138
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7249036215693938254}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 095c2d2f4abb74043b99cb1400978c9f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::BossFeedback
+  hitMaterial: {fileID: 2100000, guid: c5f9ebfe5ddc30447b2791b40c264004, type: 2}
+  hitGradient:
+    serializedVersion: 2
+    key0: {r: 1, g: 1, b: 1, a: 1}
+    key1: {r: 1, g: 0.051470593, b: 0, a: 1}
+    key2: {r: 0.3962264, g: 0.012006861, b: 0, a: 0}
+    key3: {r: 0.05660379, g: 0.00095938623, b: 0, a: 0}
+    key4: {r: 0, g: 0, b: 0, a: 0}
+    key5: {r: 0, g: 0, b: 0, a: 0}
+    key6: {r: 0, g: 0, b: 0, a: 0}
+    key7: {r: 0, g: 0, b: 0, a: 0}
+    ctime0: 15929
+    ctime1: 29885
+    ctime2: 62804
+    ctime3: 65535
+    ctime4: 0
+    ctime5: 0
+    ctime6: 0
+    ctime7: 0
+    atime0: 0
+    atime1: 65535
+    atime2: 0
+    atime3: 0
+    atime4: 0
+    atime5: 0
+    atime6: 0
+    atime7: 0
+    m_Mode: 0
+    m_ColorSpace: -1
+    m_NumColorKeys: 4
+    m_NumAlphaKeys: 2
+  hitFlashDuration: 0.05
 --- !u!111 &7396154775169397292
 Animation:
   m_ObjectHideFlags: 0

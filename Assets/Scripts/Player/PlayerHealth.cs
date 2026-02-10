@@ -18,8 +18,16 @@ public class PlayerHealth : MonoBehaviour
 
     void Start()
     {
+        ResetPlayerHealth();
+    }
+
+    //Method to reset player health
+    public void ResetPlayerHealth()
+    {
         currentHealth = maxHealth;
         inmune = false;
+        parrying = false;
+        reflecting = false;
     }
 
     //Method to reduce player health
@@ -67,9 +75,10 @@ public class PlayerHealth : MonoBehaviour
             if (inmune)
             {
                 if(parrying)
+                {
                     CombatEvents.OnParriedBullet?.Invoke();
-                    
                     bullet.ParriedBullet(transform.position);
+                }
                 
                 return;
             }
@@ -101,8 +110,6 @@ public class PlayerHealth : MonoBehaviour
             
         inmune = true;
         Invoke("ResetInmune", duration);
-
-        CombatEvents.OnParryStart?.Invoke();
         
     }
 
@@ -116,7 +123,6 @@ public class PlayerHealth : MonoBehaviour
     private void ResetInmune()
     {
         inmune = false;
-        CombatEvents.OnParryEnd?.Invoke();
     }
 
     private void ResetReflecting()
@@ -132,10 +138,12 @@ public class PlayerHealth : MonoBehaviour
         //Set reflecting
         // SetReflecting(parryDuration);
         Invoke("ResetParrying", parryDuration);
+        CombatEvents.OnParryStart?.Invoke();
     }
 
     private void ResetParrying()
     {
         parrying = false;
+        CombatEvents.OnParryEnd?.Invoke();
     }
 }

@@ -37,7 +37,7 @@ public class TestUI : MonoBehaviour
 
         if (playerParry != null && parryChargeBarFill != null)
         {
-            float parryChargeAmount = playerParry.amountParryCharged;
+            float parryChargeAmount = playerParry.GetChargePercentage();
             parryChargeBarFill.fillAmount = parryChargeAmount;
         }
     }

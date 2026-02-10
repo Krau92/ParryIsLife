@@ -16,10 +16,11 @@ public abstract class ShootingPatternSO : ScriptableObject
 
     public IEnumerator Shoot(Vector2 shootOrigin, Vector2 objectivePos, NewTestBullet prefabBullet)
     {
+        WaitForSeconds wait = new WaitForSeconds(burstCooldown);
         for (int burst = 0; burst < numberOfBursts; burst++)
         {
             ExecuteShootingPattern(shootOrigin, objectivePos, prefabBullet);
-            yield return new WaitForSeconds(burstCooldown);
+            yield return wait;
         }
     }
 

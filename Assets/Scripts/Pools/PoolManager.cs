@@ -11,6 +11,7 @@ public class PoolManager : MonoBehaviour
     //!Add here all the static references to the different pools
     private static GameObject bulletsSystemEmpty;
     private static GameObject gameObjectsSystemEmpty;
+    private static GameObject audioSystemEmpty;
 
     //Dictionary to find pools by prefab
     private static Dictionary<GameObject, ObjectPool<GameObject>> objectPools;
@@ -19,8 +20,8 @@ public class PoolManager : MonoBehaviour
     public enum PoolType
     {
         Bullets,    //player and enemy Bullets
-        GameObjects //Generic GameObjects
-
+        GameObjects, //Generic GameObjects
+        Audio       //Sound Effects
         //!Add more pool types here
     }
     public static PoolType poolType;
@@ -44,6 +45,9 @@ public class PoolManager : MonoBehaviour
 
         gameObjectsSystemEmpty = new GameObject("GameObjects Pool");
         gameObjectsSystemEmpty.transform.SetParent(emptyHolder.transform);
+
+        audioSystemEmpty = new GameObject("Audio Pool");
+        audioSystemEmpty.transform.SetParent(emptyHolder.transform);
 
         //!Add more empties here
 
@@ -134,7 +138,8 @@ public class PoolManager : MonoBehaviour
                 return bulletsSystemEmpty;
             case PoolType.GameObjects:
                 return gameObjectsSystemEmpty;
-
+            case PoolType.Audio:
+                return audioSystemEmpty;
 
             //!Add more cases here
             default:

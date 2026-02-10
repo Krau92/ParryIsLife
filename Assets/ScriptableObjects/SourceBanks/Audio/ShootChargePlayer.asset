@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d68c583a5d0263849950e42a2c87fba0, type: 3}
+  m_Name: ShootChargePlayer
+  m_EditorClassIdentifier: Assembly-CSharp::ChargingEffectsSO
+  chargingRegisters:
+  - chargingState: 0
+    audioClip: {fileID: 8300000, guid: 93972e285b701054789997ae8a09bafe, type: 3}
+    volumeAdjustment: 0.15
+    initialPitchAdjustment: 3
+    finalPitchAdjustment: 3
+  - chargingState: 1
+    audioClip: {fileID: 8300000, guid: 87cb106cf745c6b43ac3b5ae9563ed6a, type: 3}
+    volumeAdjustment: 0.15
+    initialPitchAdjustment: 0.75
+    finalPitchAdjustment: 3
+  - chargingState: 2
+    audioClip: {fileID: 8300000, guid: 5028de68686c0a740b83137dcd410ea8, type: 3}
+    volumeAdjustment: 0.25
+    initialPitchAdjustment: 0.9
+    finalPitchAdjustment: 0.9

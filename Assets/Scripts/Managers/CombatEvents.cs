@@ -3,10 +3,15 @@ using System;
 
 public static class CombatEvents
 {
+    public static Action OnChargingParryStart;
+    public static Action OnChargingParryEnd;
     public static Action OnParryStart;
     public static Action OnParryEnd;
     public static Action OnReflectingStart;
     public static Action OnReflectingEnd;
+    public static Action OnChargingShotStart;
+    public static Action OnChargingShotEnd;
+    public static Action<bool> OnPlayerShoot;
 
     
     public static Action<Boss> OnBossSelected;

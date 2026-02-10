@@ -44,6 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac9f5ccc2868e03408bb80365482e649, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManage
-  currentGameState: 0
+  currentGameState: 2
   mapCamera: {fileID: 0}
   combatCamera: {fileID: 0}
+  initialGameState: 2

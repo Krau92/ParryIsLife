@@ -7,19 +7,23 @@ public class PlayerParry : MonoBehaviour
     [SerializeField] private float parryCooldown = 1f;
     [SerializeField] private float chargedParryIncreaseDuration = 0.3f;
     [SerializeField] private float chargedParryHoldTime = 1.5f;
+    [SerializeField] private float chargingBufferTime = 0.2f;
 
-    public float amountParryCharged { get { return parryHoldTimer / chargedParryHoldTime; } }
+    public float GetChargePercentage() {  return parryHoldTimer / chargedParryHoldTime; }
 
     [SerializeField] private PlayerHealth playerHealth;
     [SerializeField] private PlayerMovement playerMovement;
 
     //Control Variables
+    private bool isChargingParry = false;
+    private float chargingBufferTimer;
     private float lastParryTime;
     private float parryHoldTimer = 0f;
     public bool IsParrying{ get; private set; } 
 
     void OnEnable()
     {
+        isChargingParry = false;
         InputManager.onParryInput += TryToParry;
         InputManager.onStopParryInput += TryToChargedParry;
 
@@ -44,11 +48,26 @@ public class PlayerParry : MonoBehaviour
     {
         if(InputManager.Instance.IsParryHold())
         {
+            if(!isChargingParry)
+            {
+                chargingBufferTimer += Time.deltaTime;
+                if(chargingBufferTimer >= chargingBufferTime)
+                {
+                    isChargingParry = true;
+                    CombatEvents.OnChargingParryStart?.Invoke();
+                }
+                return;
+            }
             parryHoldTimer += Time.deltaTime;
             parryHoldTimer = Mathf.Clamp(parryHoldTimer, 0f, chargedParryHoldTime);
         }
         else
+        {
+            chargingBufferTimer = 0f;
+            isChargingParry = false;
+            CombatEvents.OnChargingParryEnd?.Invoke();
             parryHoldTimer = 0f;
+        }
 
         if (IsParrying)
             if (Time.time >= lastParryTime + parryDuration)
@@ -90,4 +109,5 @@ public class PlayerParry : MonoBehaviour
             playerHealth.SetReflecting(parryDuration + chargedParryIncreaseDuration);
         }
     }
+
 }

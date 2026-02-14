@@ -100,11 +100,6 @@ public class ChargingSootEffect : MonoBehaviour
         rumbleAudioSource.Stop();
         pitchShiftAudioSource.Stop();
         StopChargeAudio();
-
-        if(percentage >= 1f)
-        {
-            CombatEvents.OnPlayerShoot.Invoke(true); // Volumen aumentado para el disparo cargado
-        }
     }
 
     // Variable para guardar la corrutina actual y poder interrumpirla

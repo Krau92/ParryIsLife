@@ -5,6 +5,10 @@ using UnityEngine;
 
 public class DummyDumb : Boss
 {
+    [SerializeField] private SoundEffectSO hitSoundEffect;
+    [SerializeField] private float soundEffectCooldown = 0.5f;
+
+    private float nextHitSoundEffectTime = 0f;
 
     public override void ActivateBoss()
     {
@@ -37,6 +41,15 @@ public class DummyDumb : Boss
 
             if (bullet.IsReflected())
                 TakeDamage(reflectedBulletDmg * dmgMultiplier);
+        }
+        
+        if(nextHitSoundEffectTime <= Time.time)
+        {
+            if(hitSoundEffect != null)
+            {
+                hitSoundEffect.PlayEffect();
+            }
+            nextHitSoundEffectTime = Time.time + soundEffectCooldown;
         }
 
         bullet.DeactivateBullet();

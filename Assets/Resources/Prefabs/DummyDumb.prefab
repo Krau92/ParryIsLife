@@ -124,7 +124,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::DummyDumb
   animationManager: {fileID: 3983925744951244008}
   timeToStartAttacking: 2
-  threatLevelThresholds: 0f000000280000003c000000
+  threatLevelThresholds: 32000000960000002c010000
   maxHealth: 700
   initBulletStunCounter: 5
   vulnerabilityDuration: 2.5
@@ -161,6 +161,8 @@ MonoBehaviour:
   chargedBulletDmg: 8
   reflectedBulletDmg: 3
   meleeLvlDmg: 030000000a0000001e0000003c000000
+  hitSoundEffect: {fileID: 0}
+  soundEffectCooldown: 0.5
 --- !u!114 &8643006798294377138
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -177,15 +179,15 @@ MonoBehaviour:
   hitGradient:
     serializedVersion: 2
     key0: {r: 1, g: 1, b: 1, a: 1}
-    key1: {r: 1, g: 0.051470593, b: 0, a: 1}
+    key1: {r: 1, g: 0.22825007, b: 0.18679243, a: 1}
     key2: {r: 0.3962264, g: 0.012006861, b: 0, a: 0}
     key3: {r: 0.05660379, g: 0.00095938623, b: 0, a: 0}
     key4: {r: 0, g: 0, b: 0, a: 0}
     key5: {r: 0, g: 0, b: 0, a: 0}
     key6: {r: 0, g: 0, b: 0, a: 0}
     key7: {r: 0, g: 0, b: 0, a: 0}
-    ctime0: 15929
-    ctime1: 29885
+    ctime0: 16422
+    ctime1: 25520
     ctime2: 62804
     ctime3: 65535
     ctime4: 0

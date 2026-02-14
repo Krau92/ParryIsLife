@@ -4,6 +4,7 @@ using System.Collections;
 public class PooledAudioSource : MonoBehaviour
 {
     private AudioSource audioSource;
+    private bool isPlaying = false;
 
     private void Awake()
     {
@@ -14,7 +15,18 @@ public class PooledAudioSource : MonoBehaviour
         }
     }
 
-    public void RotatePitch(float pitch)
+    private void Update()
+    {
+        if(isPlaying)
+        {
+            if(audioSource.isPlaying == false)
+            {
+                DeactivateObject();
+            }
+        }
+    }
+
+    public void ModifyPitch(float pitch)
     {
         if (audioSource == null) audioSource = GetComponent<AudioSource>();
         audioSource.pitch = pitch;
@@ -30,24 +42,23 @@ public class PooledAudioSource : MonoBehaviour
         
         audioSource.Play();
 
-        StartCoroutine(WaitForAudioToEnd());
+        isPlaying = true;
     }
 
-    private IEnumerator WaitForAudioToEnd()
+    //Stopping audio externally in case I want to implement looped sounds or music
+    public void Stop()
     {
-        if(audioSource.clip == null)
-        {
-             PoolManager.ReturnObjectToPool(this.gameObject, PoolManager.PoolType.Audio);
-             yield break;
-        }
-
-        // Wait for the length of the clip, adjusted for pitch
-        // Ensure pitch is not zero to avoid division by zero
-        float pitch = Mathf.Abs(audioSource.pitch);
-        if (pitch < 0.01f) pitch = 1f;
-
-        yield return new WaitForSeconds(audioSource.clip.length / pitch);
-
-        PoolManager.ReturnObjectToPool(this.gameObject, PoolManager.PoolType.Audio);
+        
+        if (audioSource == null) audioSource = GetComponent<AudioSource>();
+        audioSource.Stop();
+        DeactivateObject();
     }
+
+    private void DeactivateObject()
+    {
+        isPlaying = false;
+        PoolManager.ReturnObjectToPool(gameObject, PoolManager.PoolType.Audio);
+    }
+
+    
 }

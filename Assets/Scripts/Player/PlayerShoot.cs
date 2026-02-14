@@ -8,6 +8,7 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField] private float chargedShootTime = 1.0f;
     [SerializeField] private NewTestBullet bulletPrefab;
     [SerializeField] private float finalBulletScale = 2f;
+    [SerializeField] private SoundEffectSO shootSoundEffect, chargedShootSoundEffect;
 
     private float chargingBufferTimer;
     private float chargedShootTimer;
@@ -62,7 +63,10 @@ public class PlayerShoot : MonoBehaviour
         shootTimer = shootCooldown;
         NewTestBullet bullet = PoolManager.SpawnObject(bulletPrefab, transform.position + shootOffset, Quaternion.identity, PoolManager.PoolType.Bullets);
         bullet.ConfigureBullet(Vector2.up, bulletSpeed, false);
-        CombatEvents.OnPlayerShoot?.Invoke(false);
+        if(shootSoundEffect != null)
+        {
+            shootSoundEffect.PlayEffect();
+        }
     }
 
     private void ReleaseChargedShot()
@@ -73,9 +77,14 @@ public class PlayerShoot : MonoBehaviour
             bullet.ConfigureBullet(Vector2.up, bulletSpeed, false);
             bullet.ReescaleBullet(finalBulletScale);
             bullet.ChargedBullet();
-            
-            CombatEvents.OnChargingShotEnd?.Invoke();
+
+            if(chargedShootSoundEffect != null)
+            {
+                chargedShootSoundEffect.PlayEffect();
+            }
         }
+
+        CombatEvents.OnChargingShotEnd?.Invoke();
         
         isChargingShot = false;
         chargedShootTimer = 0f;

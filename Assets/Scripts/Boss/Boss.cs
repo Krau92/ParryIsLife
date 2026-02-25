@@ -79,6 +79,16 @@ public abstract class Boss : MonoBehaviour
     protected Coroutine shootingCoroutine;
     protected bool comboFinished;
 
+    void OnEnable()
+    {
+        CombatEvents.OnPlayerDeath += DestroyBoss;
+    }
+
+    void OnDisable()
+    {
+        CombatEvents.OnPlayerDeath -= DestroyBoss;
+    }
+
     protected virtual void Start()
     {
         playerTransform = GameObject.FindGameObjectWithTag("Player").transform;
@@ -188,7 +198,9 @@ public abstract class Boss : MonoBehaviour
             currentHealth = 0;
             animationManager.SetDead();
 
-            CombatEvents.OnBossDefeated?.Invoke();
+            DestroyBoss(); 
+            //!La animación de muerte debería lanzar el evento para poder mostrar toda la cinemática antes.
+            //! Al final de la propia cinemática también elimina al boss de la escena triggereando el DestroyBoss().
 
         }
     }
@@ -302,6 +314,16 @@ public abstract class Boss : MonoBehaviour
     public float GetHealthPercentage()
     {
         return (float)currentHealth / maxHealth;
+    }
+
+    private void DestroyBoss()
+    {
+        StopAttacking();
+        StopBossBehavior();
+        isActive = false;
+        
+        Destroy(gameObject);
+        CombatEvents.OnBossDefeated?.Invoke();
     }
 
 

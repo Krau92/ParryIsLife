@@ -45,6 +45,11 @@ public class GameManager : MonoBehaviour
     {
         if (currentGameState == newState) return;
 
+        if(currentGameState == GameState.InCombat && newState == GameState.ShowingResults)
+        {
+            CombatEvents.OnCombatEnded?.Invoke();
+        }
+
         currentGameState = newState;
         Debug.Log($"Game State changed to: {newState}");
 

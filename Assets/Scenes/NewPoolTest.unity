@@ -1504,10 +1504,6 @@ PrefabInstance:
       propertyPath: mainCamera
       value: 
       objectReference: {fileID: 519420031}
-    - target: {fileID: 7710180180955425013, guid: 12f4b53398652014d8ccf20f87148d4c, type: 3}
-      propertyPath: damageFlashDuration
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 8222465771515404648, guid: 12f4b53398652014d8ccf20f87148d4c, type: 3}
       propertyPath: m_Name
       value: Player

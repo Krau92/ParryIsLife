@@ -1069,7 +1069,7 @@ MonoBehaviour:
   damagedColor: {r: 1, g: 0.020754695, b: 0.026575109, a: 0.5}
   hitColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.8}
   hitFlashDuration: 0.1
-  damageFlashDuration: 0.5
+  damageFlashDuration: 1
   deactivatedColor: {r: 0.00048828125, g: 0.00048828125, b: 0.0009765625, a: 0}
 --- !u!212 &3494558534996198775
 SpriteRenderer:

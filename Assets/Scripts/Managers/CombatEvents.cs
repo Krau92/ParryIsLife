@@ -21,6 +21,8 @@ public static class CombatEvents
     public static Action OnPlayerDeath;
     public static Action OnBossDamaged;
     public static Action OnBossDefeated;
+
+    public static Action OnCombatEnded;
     
     public static Action OnParriedBullet;
     public static Action OnReflectedBullet;

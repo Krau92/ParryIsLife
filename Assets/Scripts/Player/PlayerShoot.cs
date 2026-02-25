@@ -20,16 +20,22 @@ public class PlayerShoot : MonoBehaviour
     {
         InputManager.onShootInput += Shoot;
         InputManager.onStopShootInput += ReleaseChargedShot;
+        CombatEvents.OnCombatEnded += ReleaseChargedShot;
     }
 
     void OnDisable()
     {
         InputManager.onShootInput -= Shoot;
         InputManager.onStopShootInput -= ReleaseChargedShot;
+        CombatEvents.OnCombatEnded -= ReleaseChargedShot;
     }
 
     void Update()
     {
+        if(GameManager.Instance.currentGameState != GameState.InCombat)
+            return;
+
+
         if (shootTimer > 0f)
         {
             shootTimer -= Time.deltaTime;
@@ -59,7 +65,11 @@ public class PlayerShoot : MonoBehaviour
 
     private void Shoot()
     {
-        if (shootTimer > 0f) return;
+        //Check if we can shoot and if we are in combat
+        if (shootTimer > 0f || GameManager.Instance.currentGameState != GameState.InCombat) 
+            return;
+
+
         shootTimer = shootCooldown;
         NewTestBullet bullet = PoolManager.SpawnObject(bulletPrefab, transform.position + shootOffset, Quaternion.identity, PoolManager.PoolType.Bullets);
         bullet.ConfigureBullet(Vector2.up, bulletSpeed, false);

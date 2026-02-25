@@ -26,6 +26,7 @@ public class PlayerParry : MonoBehaviour
         isChargingParry = false;
         InputManager.onParryInput += TryToParry;
         InputManager.onStopParryInput += TryToChargedParry;
+        CombatEvents.OnCombatEnded += TryToChargedParry; 
 
     }
 
@@ -33,6 +34,7 @@ public class PlayerParry : MonoBehaviour
     {
         InputManager.onParryInput -= TryToParry;
         InputManager.onStopParryInput -= TryToChargedParry;
+        CombatEvents.OnCombatEnded -= TryToChargedParry;
     }
 
 
@@ -40,7 +42,6 @@ public class PlayerParry : MonoBehaviour
     {
         HandleParry();
 
-        //Manage the feedback for charged parry hold time
     }
 
     //Method to handle parry timing and state

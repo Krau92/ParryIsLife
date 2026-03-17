@@ -5,6 +5,9 @@ public class CombatManager : MonoBehaviour
 {
     [SerializeField] private SaveStateSO saveStateSO;
 
+    //!TEST
+    [SerializeField] private Boss testBoss;
+
     // [Header("Combat Feedback Parameters")]
     // [SerializeField] private float hitPauseDuration = 0.05f;
     // [SerializeField] private float hitPauseDurationMultiplier = 2f;
@@ -17,16 +20,21 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private int deductedPointsOnDamage = 10;
     [SerializeField] private int pointsPerParry = 5;
     [SerializeField] private int pointsPerReflect = 1;
-    [SerializeField] private int[] pointsPerMeleeHit = new int[4] {0, 5, 15, 30 };
+    [SerializeField] private int[] pointsPerMeleeHit = new int[4] { 0, 5, 15, 30 };
     [SerializeField] private int pointsOnEnemyStun = 10;
 
-    
+
     CombatResult combatResult = new CombatResult();
+    public CombatResult CombatResults => combatResult;
     int[] threatLevelThresholds = new int[3];
-    
+
 
     void OnEnable()
     {
+        //!TEST
+        BossSelected(testBoss); // Para pruebas, asigna un boss al iniciar el juego. Elimina esta línea en producción.
+
+
         // originalDeltaTime = Time.fixedDeltaTime;
         CombatEvents.OnDamageTaken += OnDamageTaken;
         CombatEvents.OnParriedBullet += OnParriedBullet;
@@ -59,7 +67,7 @@ public class CombatManager : MonoBehaviour
     //         StopCoroutine(activeHitStop);
 
     //     Time.timeScale = timeScale;
-        
+
     //     // NUNCA asignar 0 a fixedDeltaTime, causa inestabilidad en físicas (saltos)
     //     if (timeScale > 0f)
     //     {
@@ -98,7 +106,7 @@ public class CombatManager : MonoBehaviour
     private void OnDamageTaken()
     {
         combatResult.maxScore = Mathf.Max(0, combatResult.maxScore - deductedPointsOnDamage);
-        
+
     }
 
     private void OnParriedBullet()
@@ -129,32 +137,34 @@ public class CombatManager : MonoBehaviour
     {
         combatResult.completed = true;
         EndCombat();
+        GameManager.Instance.SetGameState(GameState.ShowingResults);
     }
 
     private void EndCombat()
     {
-        if(!combatResult.completed)
-            return;
-
-        // Determine threat level based on maxScore and thresholds
-        if (combatResult.maxScore >= threatLevelThresholds[2])
+        if (combatResult.completed)
         {
-            combatResult.threatLevel = 3;
-        }
-        else if (combatResult.maxScore >= threatLevelThresholds[1])
-        {
-            combatResult.threatLevel = 2;
-        }
-        else if (combatResult.maxScore >= threatLevelThresholds[0])
-        {
-            combatResult.threatLevel = 1;
-        }
-        else
-        {
-            combatResult.threatLevel = 0;
+            // Determine threat level based on maxScore and thresholds
+            if (combatResult.maxScore >= threatLevelThresholds[2])
+            {
+                combatResult.threatLevel = 3;
+            }
+            else if (combatResult.maxScore >= threatLevelThresholds[1])
+            {
+                combatResult.threatLevel = 2;
+            }
+            else if (combatResult.maxScore >= threatLevelThresholds[0])
+            {
+                combatResult.threatLevel = 1;
+            }
+            else
+            {
+                combatResult.threatLevel = 0;
+            }
         }
 
         saveStateSO.AddOrUpdateCombatResult(combatResult);
+        GameManager.Instance.SetGameState(GameState.ShowingResults);
 
     }
 

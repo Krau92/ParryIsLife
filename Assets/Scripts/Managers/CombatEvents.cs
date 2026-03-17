@@ -3,6 +3,7 @@ using System;
 
 public static class CombatEvents
 {
+    public static Action<SoundEffectSO> OnSoundShouldTrigger;
     public static Action OnChargingParryStart;
     public static Action OnChargingParryEnd;
     public static Action OnParryStart;
@@ -20,6 +21,8 @@ public static class CombatEvents
     public static Action OnPlayerDeath;
     public static Action OnBossDamaged;
     public static Action OnBossDefeated;
+
+    public static Action OnCombatEnded;
     
     public static Action OnParriedBullet;
     public static Action OnReflectedBullet;

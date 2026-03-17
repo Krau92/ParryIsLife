@@ -51,8 +51,8 @@ public class PlayerHealth : MonoBehaviour
 
         if (currentHealth <= 0)
         {
-            CombatEvents.OnPlayerDeath?.Invoke();
-            //Handle player death
+            //!Debería ir una animación que triggerea el método de InvokeDeathEvent en acabar
+            InvokeDeathEvent();
         }
     }
 
@@ -145,5 +145,10 @@ public class PlayerHealth : MonoBehaviour
     {
         parrying = false;
         CombatEvents.OnParryEnd?.Invoke();
+    }
+
+    private void InvokeDeathEvent()
+    {
+        CombatEvents.OnPlayerDeath?.Invoke();
     }
 }

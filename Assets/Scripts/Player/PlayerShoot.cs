@@ -8,6 +8,7 @@ public class PlayerShoot : MonoBehaviour
     [SerializeField] private float chargedShootTime = 1.0f;
     [SerializeField] private NewTestBullet bulletPrefab;
     [SerializeField] private float finalBulletScale = 2f;
+    [SerializeField] private SoundEffectSO shootSoundEffect, chargedShootSoundEffect;
 
     private float chargingBufferTimer;
     private float chargedShootTimer;
@@ -19,16 +20,22 @@ public class PlayerShoot : MonoBehaviour
     {
         InputManager.onShootInput += Shoot;
         InputManager.onStopShootInput += ReleaseChargedShot;
+        CombatEvents.OnCombatEnded += ReleaseChargedShot;
     }
 
     void OnDisable()
     {
         InputManager.onShootInput -= Shoot;
         InputManager.onStopShootInput -= ReleaseChargedShot;
+        CombatEvents.OnCombatEnded -= ReleaseChargedShot;
     }
 
     void Update()
     {
+        if(GameManager.Instance.currentGameState != GameState.InCombat)
+            return;
+
+
         if (shootTimer > 0f)
         {
             shootTimer -= Time.deltaTime;
@@ -58,11 +65,18 @@ public class PlayerShoot : MonoBehaviour
 
     private void Shoot()
     {
-        if (shootTimer > 0f) return;
+        //Check if we can shoot and if we are in combat
+        if (shootTimer > 0f || GameManager.Instance.currentGameState != GameState.InCombat) 
+            return;
+
+
         shootTimer = shootCooldown;
         NewTestBullet bullet = PoolManager.SpawnObject(bulletPrefab, transform.position + shootOffset, Quaternion.identity, PoolManager.PoolType.Bullets);
         bullet.ConfigureBullet(Vector2.up, bulletSpeed, false);
-        CombatEvents.OnPlayerShoot?.Invoke(false);
+        if(shootSoundEffect != null)
+        {
+            shootSoundEffect.PlayEffect();
+        }
     }
 
     private void ReleaseChargedShot()
@@ -73,9 +87,14 @@ public class PlayerShoot : MonoBehaviour
             bullet.ConfigureBullet(Vector2.up, bulletSpeed, false);
             bullet.ReescaleBullet(finalBulletScale);
             bullet.ChargedBullet();
-            
-            CombatEvents.OnChargingShotEnd?.Invoke();
+
+            if(chargedShootSoundEffect != null)
+            {
+                chargedShootSoundEffect.PlayEffect();
+            }
         }
+
+        CombatEvents.OnChargingShotEnd?.Invoke();
         
         isChargingShot = false;
         chargedShootTimer = 0f;

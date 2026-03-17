@@ -1,3 +1,4 @@
+using System; // Necesario para los eventos
 using UnityEngine;
 
 
@@ -6,21 +7,28 @@ public enum GameState
     MainMenu,
     InMap,
     InCombat,
+    ShowingResults,
     Paused
 }
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    public GameState currentGameState;
-    [SerializeField] private Camera mapCamera;
-    [SerializeField] private Camera combatCamera;
+
+    // Propiedad pública para leer, privada para escribir. Fuerza a usar SetGameState.
+    public GameState currentGameState { get; private set; }
+
+    // Evento estático para notificar cambios de estado sin necesidad de referencias directas
+    public static event Action<GameState> OnGameStateChanged;
+
     [SerializeField] private GameState initialGameState;
+
     private void Awake()
     {
         if(Instance == null)
         {
             Instance = this;
+            DontDestroyOnLoad(gameObject); // Hace que el Manager persista entre escenas
         }
         else
         {
@@ -35,7 +43,16 @@ public class GameManager : MonoBehaviour
 
     public void SetGameState(GameState newState)
     {
+        if (currentGameState == newState) return;
+
+        if(currentGameState == GameState.InCombat && newState == GameState.ShowingResults)
+        {
+            CombatEvents.OnCombatEnded?.Invoke();
+        }
+
         currentGameState = newState;
-        //Handle state transition logic here (e.g., pausing the game, showing UI, etc.)
+        Debug.Log($"Game State changed to: {newState}");
+
+        OnGameStateChanged?.Invoke(newState);
     }
 }

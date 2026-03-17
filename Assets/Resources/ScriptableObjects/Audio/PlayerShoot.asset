@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 60a0d48b30517c144824f64b5bee8c82, type: 3}
+  m_Name: PlayerShoot
+  m_EditorClassIdentifier: Assembly-CSharp::SoundEffectSO
+  audioRegisters:
+  - audioClip: {fileID: 8300000, guid: dc106d612ab21084e9bde016ffbf2730, type: 3}
+    volumeAdjustment: 1
+    pitchAdjustment: 1
+  - audioClip: {fileID: 8300000, guid: b1ef7e2de695de0488f40823d692ee2d, type: 3}
+    volumeAdjustment: 0.25
+    pitchAdjustment: 1
+  pitchRandomRange: 0.3
+  volumeRandomRange: 0.1

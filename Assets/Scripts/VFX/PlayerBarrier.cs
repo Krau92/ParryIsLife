@@ -64,7 +64,7 @@ public class PlayerBarrier : MonoBehaviour
         }
     }
 
-    private void ResetBarrierColor(Boss boss)
+    private void ResetBarrierColor(GameObject boss)
     {
         SetBarrierColor(barrierColor);
     }

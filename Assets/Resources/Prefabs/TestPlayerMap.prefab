@@ -52,6 +52,10 @@ PrefabInstance:
       propertyPath: parent
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 5636626819533571072, guid: 12f4b53398652014d8ccf20f87148d4c, type: 3}
+      propertyPath: m_Radius
+      value: 0.16
+      objectReference: {fileID: 0}
     - target: {fileID: 5957085209430914116, guid: 12f4b53398652014d8ccf20f87148d4c, type: 3}
       propertyPath: requiredState
       value: 1
@@ -59,6 +63,10 @@ PrefabInstance:
     - target: {fileID: 8222465771515404648, guid: 12f4b53398652014d8ccf20f87148d4c, type: 3}
       propertyPath: m_Name
       value: TestPlayerMap
+      objectReference: {fileID: 0}
+    - target: {fileID: 8222465771515404648, guid: 12f4b53398652014d8ccf20f87148d4c, type: 3}
+      propertyPath: m_TagString
+      value: PlayerMap
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 4459901420735087148, guid: 12f4b53398652014d8ccf20f87148d4c, type: 3}
@@ -68,6 +76,11 @@ PrefabInstance:
     - {fileID: 2028814741396964984, guid: 12f4b53398652014d8ccf20f87148d4c, type: 3}
     m_RemovedGameObjects:
     - {fileID: 729244615275115779, guid: 12f4b53398652014d8ccf20f87148d4c, type: 3}
+    - {fileID: 6046835113801154889, guid: 12f4b53398652014d8ccf20f87148d4c, type: 3}
+    - {fileID: 8737953973836448495, guid: 12f4b53398652014d8ccf20f87148d4c, type: 3}
+    - {fileID: 4654582431532045406, guid: 12f4b53398652014d8ccf20f87148d4c, type: 3}
+    - {fileID: 1515877487504902776, guid: 12f4b53398652014d8ccf20f87148d4c, type: 3}
+    - {fileID: 1667397163566845340, guid: 12f4b53398652014d8ccf20f87148d4c, type: 3}
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 12f4b53398652014d8ccf20f87148d4c, type: 3}

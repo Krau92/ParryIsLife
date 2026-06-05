@@ -30,7 +30,6 @@ public abstract class ShootingPatternSO : ScriptableObject
         bullet.ConfigureBullet(bulletDirection, bulletSpeed, true, IsParreable, shootOrigin);
         bullet.SetCircularSpeed(rotationSpeed);
         
-
     }
 
     protected void SetBulletParameters(NewTestBullet bullet, Vector2 bulletDirection)

@@ -15,6 +15,10 @@ public class EnemyShooting : MonoBehaviour
     void OnEnable()
     {
         shootTimer = 0f;
+        if(player == null)
+        {
+            player = GameObject.FindGameObjectWithTag("Player").transform;
+        }
     }
 
 

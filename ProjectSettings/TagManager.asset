@@ -8,6 +8,7 @@ TagManager:
   - Bullet
   - ScreenLimits
   - PlayerMelee
+  - PlayerMap
   layers:
   - Default
   - TransparentFX
@@ -45,14 +46,20 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Player
-    uniqueID: 1748655141
+  - name: Bullets
+    uniqueID: 1529641909
+    locked: 0
+  - name: BG
+    uniqueID: 3521678337
+    locked: 0
+  - name: Pinpoints
+    uniqueID: 3483517451
     locked: 0
   - name: Enemies
     uniqueID: 1892534313
     locked: 0
-  - name: Bullets
-    uniqueID: 1529641909
+  - name: Player
+    uniqueID: 1748655141
     locked: 0
   - name: UI
     uniqueID: 2918320565

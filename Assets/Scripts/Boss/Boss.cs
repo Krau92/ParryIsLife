@@ -1,7 +1,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using NUnit.Framework;
 using UnityEngine;
 
 [Serializable]
@@ -68,7 +67,7 @@ public abstract class Boss : MonoBehaviour
     public int CurrentHealth { get { return currentHealth; } }
     protected bool isActive = false;
     protected bool isDefeated = false;
-    protected bool isInmune = false;
+    protected bool isInmune = true;
     protected bool isAttacking = false;
 
     protected List<BossComboPattern> currentCombos;
@@ -108,8 +107,8 @@ public abstract class Boss : MonoBehaviour
 
     public virtual void ActivateBoss()
     {
-        isActive = true;
         animationManager.InitCombat();
+        isActive = true;
         StartBossBehavior();
     }
 

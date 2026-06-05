@@ -5,9 +5,8 @@ public class PinpointInteraction : MonoBehaviour
     public string bossName;
     [SerializeField] bool isPlayerInRange = false;
 
-    //!ELIMINAR,  LO HARÁ EL GAME MANAGER!
-    [SerializeField] Camera bossCombatCamera;
     [SerializeField] BossBank bossBank;
+    public GameObject bossInfoPanel;
 
     void OnEnable()
     {
@@ -19,20 +18,34 @@ public class PinpointInteraction : MonoBehaviour
         InputManager.onShootInput -= OnConfirmInputDown;
     }
 
+    void Start()
+    {
+        if (bossInfoPanel != null)
+        {
+            bossInfoPanel.SetActive(false);
+        }
+    }
+
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("Trigger Entered with tag: " + other.tag);
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("PlayerMap"))
         {
             isPlayerInRange = true;
+            if(bossInfoPanel != null)
+            {
+                bossInfoPanel.SetActive(true);
+            }
         }
     }
     void OnTriggerExit2D(Collider2D other)
     {
-        Debug.Log("Trigger Exited with tag: " + other.tag);
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("PlayerMap"))
         {
             isPlayerInRange = false;
+            if(bossInfoPanel != null)
+            {
+                bossInfoPanel.SetActive(false);
+            }
         }
     }
 
@@ -40,20 +53,9 @@ public class PinpointInteraction : MonoBehaviour
     {
         if(isPlayerInRange && GameManager.Instance.currentGameState == GameState.InMap)
         {
-            //GameManager.Instance.StartBossFight(bossName);
-            //En el game manager gestionar la transición con cámara, posición de spawn del boss, recolocar jugador
-            //Activar de nuevo el jugador y desactivar el avatar del mapamundi...
-            //En un futuro añadir una UI previa para mostrar info del boss o bien doble confirmación
             
             GameObject bossPrefab = bossBank.GetBossPrefab(bossName);
-            CombatEvents.OnBossSelected?.Invoke(bossPrefab.GetComponent<Boss>());
-
-            //!Provisional
-            Vector3 spawnPosition = new Vector3(0, 2.59f, 0);
-            Instantiate(bossPrefab, spawnPosition, Quaternion.identity);
-            bossCombatCamera.enabled = true;
-
-            GameManager.Instance.SetGameState(GameState.InCombat);
+            CombatEvents.OnBossSelected?.Invoke(bossPrefab);
 
         }
     }

@@ -15,7 +15,7 @@ public class PlayerMovement : MonoBehaviour
     Vector3 minScreenBounds, maxScreenBounds;
 
     private Vector2 movementInput;
-    private Rigidbody2D rb;
+    [SerializeField] private Rigidbody2D rb;
 
     void OnEnable()
     {
@@ -32,6 +32,7 @@ public class PlayerMovement : MonoBehaviour
     void Start()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
+        mainCamera = GameObject.FindWithTag("MainCamera").GetComponent<Camera>();
         playerSize = spriteRenderer.bounds.size /2; // Dividido entre 2 para obtener el radio desde el centro
 
                 // 2. Calculamos dónde están los bordes de la pantalla en EL MUNDO

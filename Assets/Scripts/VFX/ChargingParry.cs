@@ -75,7 +75,6 @@ public class ChargingParry : MonoBehaviour
             
             float radius = initialRadius * Mathf.Pow(1f - chargedPercentage, circleContractionSmoothness);
             DrawCircle(radius);
-            Debug.Log("Drawing circle with radius: " + radius);
             
             if (chargedPercentage >= 1f && !fullyCharged)
             {

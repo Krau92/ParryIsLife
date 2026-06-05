@@ -32,7 +32,10 @@ public class CombatManager : MonoBehaviour
     void OnEnable()
     {
         //!TEST
-        BossSelected(testBoss); // Para pruebas, asigna un boss al iniciar el juego. Elimina esta línea en producción.
+        if (testBoss != null)
+        {
+            BossSelected(testBoss.gameObject); // Para pruebas, asigna un boss al iniciar el juego. Elimina esta línea en producción.
+        }
 
 
         // originalDeltaTime = Time.fixedDeltaTime;
@@ -91,9 +94,9 @@ public class CombatManager : MonoBehaviour
 
 
 
-    private void BossSelected(Boss boss)
+    private void BossSelected(GameObject boss)
     {
-        threatLevelThresholds = boss.ThreatLevelThresholds;
+        threatLevelThresholds = boss.GetComponent<Boss>().ThreatLevelThresholds;
         combatResult = new CombatResult
         {
             bossName = boss.name,
@@ -137,7 +140,6 @@ public class CombatManager : MonoBehaviour
     {
         combatResult.completed = true;
         EndCombat();
-        GameManager.Instance.SetGameState(GameState.ShowingResults);
     }
 
     private void EndCombat()

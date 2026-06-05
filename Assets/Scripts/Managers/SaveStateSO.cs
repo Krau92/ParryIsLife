@@ -33,7 +33,7 @@ public class SaveStateSO : ScriptableObject
     public void AddOrUpdateCombatResult(CombatResult newResult)
     {
         CombatResult existingResult = combatResults.Find(result => result.bossName == newResult.bossName);
-        if (existingResult != null)
+        if (existingResult != null && newResult.completed)
         {
             existingResult.completed |= newResult.completed;
             existingResult.maxScore = Mathf.Max(existingResult.maxScore, newResult.maxScore);
@@ -45,6 +45,23 @@ public class SaveStateSO : ScriptableObject
         }
 
         ManageSaveData.SaveData(this.saveSlot, this);
+    }
+
+    public void GetBossInfo(string bossName, out bool completed, out int maxScore, out int threatLevel)
+    {
+        CombatResult result = combatResults.Find(r => r.bossName == bossName);
+        if (result != null)
+        {
+            completed = result.completed;
+            maxScore = result.maxScore;
+            threatLevel = result.threatLevel;
+        }
+        else
+        {
+            completed = false;
+            maxScore = 0;
+            threatLevel = 0;
+        }
     }
 
 

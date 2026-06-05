@@ -3,6 +3,10 @@ using UnityEngine;
 public class BossAnimationManaging : MonoBehaviour
 {
     [SerializeField] private Animator bossAnimator;
+    void Awake()
+    {
+        InitCombat();
+    }
 
     public void InitCombat()
     {
@@ -14,8 +18,8 @@ public class BossAnimationManaging : MonoBehaviour
 
     public void StartAttacking()
     {
-        Debug.Log("Boss starts attacking animation.");
         bossAnimator.SetBool("Attacking", true);
+        bossAnimator.SetTrigger("Attack");
     }
 
     public void SetBossAnimation(int anim)
@@ -36,7 +40,6 @@ public class BossAnimationManaging : MonoBehaviour
 
     public void StopAttacking()
     {
-        Debug.Log("Boss stops attacking animation.");
         bossAnimator.SetBool("Attacking", false);
     }
 }

@@ -15,7 +15,7 @@ public static class CombatEvents
     public static Action<bool> OnPlayerShoot;
 
     
-    public static Action<Boss> OnBossSelected;
+    public static Action<GameObject> OnBossSelected;
 
     public static Action OnDamageTaken;
     public static Action OnPlayerDeath;
@@ -23,6 +23,7 @@ public static class CombatEvents
     public static Action OnBossDefeated;
 
     public static Action OnCombatEnded;
+    public static Action OnResultsClosed;
     
     public static Action OnParriedBullet;
     public static Action OnReflectedBullet;

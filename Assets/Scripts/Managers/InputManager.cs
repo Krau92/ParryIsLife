@@ -14,6 +14,7 @@ public class InputManager : MonoBehaviour
     public static event Action onStopShootInput;
 
     public static event Action onMeleeInput;
+    public static event Action anyInputReceived;
 
     public static InputManager Instance { get; private set; }  
     
@@ -78,6 +79,15 @@ public class InputManager : MonoBehaviour
         //Melee Input Handling
         if (playerControls.PlayerActions.Melee.triggered)
             onMeleeInput?.Invoke();
+
+        //Any Input Handling
+        if (playerControls.PlayerActions.Move.triggered ||
+            playerControls.PlayerActions.Parry.triggered ||
+            playerControls.PlayerActions.Shoot.triggered ||
+            playerControls.PlayerActions.Melee.triggered)
+        {
+            anyInputReceived?.Invoke();
+        }
     }
 
     public bool IsParryHold()

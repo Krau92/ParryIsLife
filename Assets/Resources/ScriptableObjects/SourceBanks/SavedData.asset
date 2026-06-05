@@ -12,9 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f82e0c1f7bd7a8e4da6ef582291e9354, type: 3}
   m_Name: SavedData
   m_EditorClassIdentifier: Assembly-CSharp::SaveStateSO
-  combatResults:
-  - bossName: DummyDumb
-    completed: 1
-    maxScore: 600
-    threatLevel: 3
+  combatResults: []
   saveSlot: 1

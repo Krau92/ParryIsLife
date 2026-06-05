@@ -15,7 +15,7 @@ public class AspectRatioEnforcer : MonoBehaviour
         cam = GetComponent<Camera>();
         
         //Setting camera aspect ratio at start
-        UpdateCameraRect();
+        SetNormalRatio();
     }
 
     void Update()
@@ -23,11 +23,18 @@ public class AspectRatioEnforcer : MonoBehaviour
         //Update only if the screen size has changed
         if (Screen.width != lastWidth || Screen.height != lastHeight)
         {
-            UpdateCameraRect();
+            if(GameManager.Instance.currentGameState == GameState.InCombat)
+            {
+                SetCombatRatio();
+            }
+            else
+            {
+                SetNormalRatio();
+            }
         }
     }
 
-    void UpdateCameraRect()
+    public void SetCombatRatio()
     {
         lastWidth = Screen.width;
         lastHeight = Screen.height;
@@ -55,5 +62,14 @@ public class AspectRatioEnforcer : MonoBehaviour
             rect.y = 0;
             cam.rect = rect;
         }
+    }
+
+    public void SetNormalRatio()
+    {
+        lastWidth = Screen.width;
+        lastHeight = Screen.height;
+
+        // Reset to full screen
+        cam.rect = new Rect(0, 0, 1, 1);
     }
 }

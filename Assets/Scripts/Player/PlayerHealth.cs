@@ -150,5 +150,6 @@ public class PlayerHealth : MonoBehaviour
     private void InvokeDeathEvent()
     {
         CombatEvents.OnPlayerDeath?.Invoke();
+        Destroy(gameObject);
     }
 }

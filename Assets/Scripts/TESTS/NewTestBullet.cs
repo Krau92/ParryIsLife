@@ -166,6 +166,7 @@ public class NewTestBullet : MonoBehaviour
 
         SetDirection(newDirection);
         SetOrigin(newOrigin);
+        SetSpeed(6f);
         SetCircularSpeed(0f);
 
         //Reset death timer
@@ -174,6 +175,7 @@ public class NewTestBullet : MonoBehaviour
 
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.color = Color.yellow; // Change color to indicate reflection
+        
     }
 
     public void ParriedBullet(Vector2 newOrigin)

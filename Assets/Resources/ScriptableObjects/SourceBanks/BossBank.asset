@@ -15,3 +15,5 @@ MonoBehaviour:
   bossPrefabs:
   - bossName: DummyDumb
     bossPrefab: {fileID: 7249036215693938254, guid: 776c2b1497c86414e84eeccf1731da4f, type: 3}
+  - bossName: MikeWazowsky
+    bossPrefab: {fileID: 5855134391715433345, guid: 871f0660774cb4c4a80960be7238f58b, type: 3}

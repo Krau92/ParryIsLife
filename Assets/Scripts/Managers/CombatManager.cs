@@ -4,9 +4,8 @@ using System.Collections;
 public class CombatManager : MonoBehaviour
 {
     [SerializeField] private SaveStateSO saveStateSO;
+    [HideInInspector] public GameObject player;
 
-    //!TEST
-    [SerializeField] private Boss testBoss;
 
     // [Header("Combat Feedback Parameters")]
     // [SerializeField] private float hitPauseDuration = 0.05f;
@@ -31,14 +30,9 @@ public class CombatManager : MonoBehaviour
 
     void OnEnable()
     {
-        //!TEST
-        if (testBoss != null)
-        {
-            BossSelected(testBoss.gameObject); // Para pruebas, asigna un boss al iniciar el juego. Elimina esta línea en producción.
-        }
-
 
         // originalDeltaTime = Time.fixedDeltaTime;
+        CombatEvents.OnPlayerCreated += GetPlayer;
         CombatEvents.OnDamageTaken += OnDamageTaken;
         CombatEvents.OnParriedBullet += OnParriedBullet;
         CombatEvents.OnReflectedBullet += OnReflectedBullet;
@@ -51,6 +45,7 @@ public class CombatManager : MonoBehaviour
 
     void OnDisable()
     {
+        CombatEvents.OnPlayerCreated -= GetPlayer;
         CombatEvents.OnDamageTaken -= OnDamageTaken;
         CombatEvents.OnParriedBullet -= OnParriedBullet;
         CombatEvents.OnReflectedBullet -= OnReflectedBullet;
@@ -92,7 +87,10 @@ public class CombatManager : MonoBehaviour
     //     Time.fixedDeltaTime = originalDeltaTime;
     // }
 
-
+    private void GetPlayer(GameObject playerObj)
+    {
+        player = playerObj;
+    }
 
     private void BossSelected(GameObject boss)
     {

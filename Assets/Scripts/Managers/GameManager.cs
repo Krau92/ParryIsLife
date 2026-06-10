@@ -122,6 +122,7 @@ public class GameManager : MonoBehaviour
             Destroy(playerInstance);
         }
         playerInstance = Instantiate(playerPrefab, playerSpawnPoint.position, Quaternion.identity);
+        CombatEvents.OnPlayerCreated?.Invoke(playerInstance);
 
         if (bossInstance != null)
         {

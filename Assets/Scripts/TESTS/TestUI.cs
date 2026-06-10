@@ -15,6 +15,23 @@ public class TestUI : MonoBehaviour
     [SerializeField] Image parryChargeBarFill;
     [SerializeField] TMP_Text lvlMelee;
 
+    void OnEnable()
+    {
+        CombatEvents.OnPlayerCreated += GetPlayer;
+    }
+
+    void OnDisable()
+    {
+        CombatEvents.OnPlayerCreated -= GetPlayer;
+    }
+
+    void GetPlayer(GameObject playerObj)
+    {
+        playerMelee = playerObj.GetComponent<PlayerMelee>();
+        playerHealth = playerObj.GetComponent<PlayerHealth>();
+        playerParry = playerObj.GetComponent<PlayerParry>();
+    }
+
 
     private void Update()
     {

@@ -64,8 +64,6 @@ public class PlayerHealth : MonoBehaviour
             NewTestBullet bullet = other.gameObject.GetComponent<NewTestBullet>();
             if (reflecting)
             {
-                
-                CombatEvents.OnParriedBullet?.Invoke();
                 //Reflect the bullet
                 bullet.ReflectBullet(transform.position);
                 return;
@@ -76,7 +74,6 @@ public class PlayerHealth : MonoBehaviour
             {
                 if(parrying)
                 {
-                    CombatEvents.OnParriedBullet?.Invoke();
                     bullet.ParriedBullet(transform.position);
                 }
                 

@@ -217,7 +217,7 @@ public abstract class Boss : MonoBehaviour
         }
     }
 
-    protected void ChangeToPhase(int newPhase)
+    protected virtual void ChangeToPhase(int newPhase)
     {
         StopAttacking();
         StopBossBehavior();
@@ -301,6 +301,7 @@ public abstract class Boss : MonoBehaviour
         {
             NewTestBullet bullet = collision.gameObject.GetComponent<NewTestBullet>();
             RecieveBulletHit(bullet);
+            bullet.DeactivateBullet();
         }
     }
 

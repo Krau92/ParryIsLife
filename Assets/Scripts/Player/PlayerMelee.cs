@@ -18,13 +18,15 @@ public class PlayerMelee : MonoBehaviour
 
     void OnEnable()
     {
-        CombatEvents.OnParriedBullet += CountParriedBullet;
+        CombatEvents.OnReflectedBullet += CountReflectedBullet;
+        CombatEvents.OnParriedBullet += AddMeleeChargeLevel;
         InputManager.onMeleeInput += StartMelee;
     }
 
     void OnDisable()
     {
-        CombatEvents.OnParriedBullet -= CountParriedBullet;
+        CombatEvents.OnReflectedBullet -= CountReflectedBullet;
+        CombatEvents.OnParriedBullet -= AddMeleeChargeLevel;
         InputManager.onMeleeInput -= StartMelee;
     }
 
@@ -69,7 +71,7 @@ public class PlayerMelee : MonoBehaviour
     }
 
 
-    public void CountParriedBullet()
+    public void CountReflectedBullet()
     {
         parriedBulletsCount++;
 

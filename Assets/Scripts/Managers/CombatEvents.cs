@@ -18,6 +18,7 @@ public static class CombatEvents
     public static Action<GameObject> OnBossSelected;
 
     public static Action OnDamageTaken;
+    public static Action<GameObject> OnPlayerCreated;
     public static Action OnPlayerDeath;
     public static Action OnBossDamaged;
     public static Action OnBossDefeated;

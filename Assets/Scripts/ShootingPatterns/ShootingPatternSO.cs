@@ -14,7 +14,7 @@ public abstract class ShootingPatternSO : ScriptableObject
 
     //Coroutine to handle shooting bursts
 
-    public IEnumerator Shoot(Vector2 shootOrigin, Vector2 objectivePos, NewTestBullet prefabBullet)
+    public virtual IEnumerator Shoot(Vector2 shootOrigin, Vector2 objectivePos, NewTestBullet prefabBullet)
     {
         WaitForSeconds wait = new WaitForSeconds(burstCooldown);
         for (int burst = 0; burst < numberOfBursts; burst++)
@@ -22,6 +22,12 @@ public abstract class ShootingPatternSO : ScriptableObject
             ExecuteShootingPattern(shootOrigin, objectivePos, prefabBullet);
             yield return wait;
         }
+    }
+
+    protected void SetBulletParameters(NewTestBullet bullet, Vector2 shootOrigin, Vector2 bulletDirection, bool isParreable)
+    {
+        bullet.ConfigureBullet(bulletDirection, bulletSpeed, true, isParreable, shootOrigin);
+        bullet.SetCircularSpeed(rotationSpeed);
     }
 
     //Sets the shooting pattern parameters and assign the owner layer of the bullet

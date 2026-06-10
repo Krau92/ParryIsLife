@@ -15,13 +15,18 @@ public class Tongue : MonoBehaviour
     ShootingPatternSO pattern;
     NewTestBullet bullet;
     Quaternion initialRot;
+    Vector3 initialScale;
 
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").transform;
         col = GetComponent<Collider2D>();
         initialRot = transform.rotation;
-        seekingMark.SetActive(false);
+        initialScale = transform.localScale;
+        if(seekingMark != null)
+        {
+            seekingMark.SetActive(false);
+        }
     }
     void Update()
     {
@@ -29,12 +34,17 @@ public class Tongue : MonoBehaviour
         {
             Quaternion targetRot = Quaternion.LookRotation(Vector3.forward, player.position - transform.position);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
-            seekingMark.transform.position = player.position;
+            if(seekingMark != null)
+            {
+                seekingMark.transform.position = player.position;
+            }
         }
         if(isAttacking)
         {
+            
+            Quaternion targetRot = Quaternion.LookRotation(Vector3.forward, seekingMark.transform.position - transform.position);
+            transform.rotation = targetRot;
             transform.localScale += Vector3.up  * tongueSpeed;
-            Debug.Log(shootPoint.position.y + " " + seekingMark.transform.position.y);
             if(shootPoint.position.y <= seekingMark.transform.position.y)
             {
                 StartCoroutine(pattern.Shoot(shootPoint.transform.position, player.position, bullet));
@@ -46,14 +56,18 @@ public class Tongue : MonoBehaviour
     public void StartSeeking()
     {
         isSeeking = true;
-        seekingMark.SetActive(true);
-        Debug.Log("Started seeking with tongue");
+        if(seekingMark != null)
+        {
+            seekingMark.transform.position = player.position;
+            seekingMark.SetActive(true);
+        }
     }
 
     public void StopSeeking()
     {
         isSeeking = false;
-        Debug.Log("Stopped seeking with tongue");
+        Quaternion targetRot = Quaternion.LookRotation(Vector3.forward, player.position - transform.position);
+        transform.rotation = targetRot;
     }
 
     public void EnableCollider()
@@ -66,22 +80,23 @@ public class Tongue : MonoBehaviour
         isAttacking = true;
         this.pattern = pattern;
         this.bullet = bullet;
-        Debug.Log("Started attacking with tongue");
     }
 
     public void StopAttacking()
     {
         isAttacking = false;
-        Debug.Log("Stopped attacking with tongue");
         col.enabled = false;
-        seekingMark.SetActive(false);
+        if(seekingMark != null)
+        {
+            seekingMark.SetActive(false);
+        }
         StartCoroutine(ResetTongue());
     }
 
     IEnumerator ResetTongue()
     {
         yield return new WaitForSeconds(tongueStopTime);
-        while(transform.localScale.y > 1)
+        while(transform.localScale.y > initialScale.y)
         {
             transform.localScale -= Vector3.up * tongueSpeed;
             yield return null;
@@ -92,6 +107,6 @@ public class Tongue : MonoBehaviour
             yield return null;
         }
         Vector3 scale = transform.localScale;
-        transform.localScale = new Vector3(scale.x, 1, scale.z);
+        transform.localScale = new Vector3(scale.x, initialScale.y, scale.z);
     }
 }

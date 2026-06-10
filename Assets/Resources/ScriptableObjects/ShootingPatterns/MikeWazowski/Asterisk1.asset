@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c8770cba976711e45affe75acc74ecdb, type: 3}
   m_Name: Asterisk1
   m_EditorClassIdentifier: Assembly-CSharp::CircularPatternSO
-  bulletSpeed: 4
+  bulletSpeed: 5
   rotationSpeed: 0
   bulletAmount: 10
   numberOfBursts: 1

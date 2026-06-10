@@ -13,9 +13,10 @@ MonoBehaviour:
   m_Name: Linear
   m_EditorClassIdentifier: Assembly-CSharp::ConePatternSO
   bulletSpeed: 4
-  rotationSpeed: 8.48
+  rotationSpeed: 0
   bulletAmount: 1
   numberOfBursts: 40
   burstCooldown: 0.01
+  IsParreable: 0
   prefabBullet: {fileID: 2762728212664310726, guid: b6aba5b8f3898f54b97e5faf26dc0b94, type: 3}
   coneAngle: 2.83

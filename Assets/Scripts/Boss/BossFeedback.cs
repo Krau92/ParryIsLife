@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class BossFeedback : MonoBehaviour
 {
@@ -9,18 +10,17 @@ public class BossFeedback : MonoBehaviour
     [SerializeField] private Gradient hitGradient;
     [SerializeField] private float hitFlashDuration = 0.05f;
 
-    private SpriteRenderer spriteRenderer;
+    [SerializeField] private SpriteRenderer spriteRenderer;
     private Material runtimeHitMaterial;
     private Coroutine flashCoroutine;
 
     void Awake()
     {
-        spriteRenderer = GetComponent<SpriteRenderer>();
         boss = GetComponent<Boss>();
         Debug.Log("Boss script found? " + (boss != null));
 
-        defaultMaterial = spriteRenderer.material;
         runtimeHitMaterial = new Material(hitMaterial);
+        defaultMaterial = spriteRenderer.material; 
     }
 
     void OnEnable()

@@ -12,7 +12,6 @@ public class DummyDumb : Boss
 
     public override void ActivateBoss()
     {
-        currentCombos = comboPatterns;
         base.ActivateBoss();
         currentBulletStunCounter = initBulletStunCounter;
     }
@@ -52,7 +51,6 @@ public class DummyDumb : Boss
             nextHitSoundEffectTime = Time.time + soundEffectCooldown;
         }
 
-        bullet.DeactivateBullet();
     }
 
     public override void RecieveMeleeHit(PlayerMelee meleeAttack)

@@ -1,21 +1,29 @@
-using System;
+using System.Collections;
 using System.Collections.Generic;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 
 public class MikeWazowsky : Boss
 {
     [SerializeField] private SoundEffectSO hitSoundEffect;
     [SerializeField] private float soundEffectCooldown = 0.5f;
+    [SerializeField] private float pauseBetweenTongueAttacks = 0.5f;
     [SerializeField] private GameObject tonguePrefab;
-    public List<Transform> tongueSpawnPoints = new List<Transform>();
+    public GameObject seekingMarkPrefab;
+    GameObject seekingMark;
+
+    public Transform maxTongueSpawn, minTongueSpawn;
     public List<Tongue> tongues = new List<Tongue>();
 
     private float nextHitSoundEffectTime = 0f;
-
+    protected override void Start()
+    {
+        seekingMark = Instantiate(seekingMarkPrefab, transform.position, seekingMarkPrefab.transform.rotation);
+        seekingMark.SetActive(false);
+        base.Start();
+    }
     public override void ActivateBoss()
     {
-        currentCombos = comboPatterns;
+        
         base.ActivateBoss();
         currentBulletStunCounter = initBulletStunCounter;
     }
@@ -55,7 +63,56 @@ public class MikeWazowsky : Boss
             nextHitSoundEffectTime = Time.time + soundEffectCooldown;
         }
 
-        bullet.DeactivateBullet();
+    }
+
+    protected override void ChangeToPhase(int newPhase)
+    {
+        switch (newPhase)
+        {
+            case 0:
+                CreateTongues(1);
+                break;
+            case 1:
+                CreateTongues(2);
+                break;
+            case 2:
+                CreateTongues(4);
+                break;
+
+            default:
+                break;
+        }
+        base.ChangeToPhase(newPhase);
+    }
+
+    private void CreateTongues(int numberOfTongues)
+    {
+        foreach(Tongue tongue in tongues)
+        {
+            Destroy(tongue.gameObject);
+        }
+        tongues.Clear();
+
+
+        int a = 0;
+        int b = 0;
+        if(numberOfTongues % 2 != 0)
+        {
+            a = 1;
+            b = 1;
+        } else
+        {
+            a = 0;
+            b = -1;
+        }
+        for(int i = 0; i < numberOfTongues; i++)
+        {
+            Vector3 spawnPosition = Vector3.Lerp(minTongueSpawn.position, maxTongueSpawn.position, (float)(i + a) / (numberOfTongues + b));
+            GameObject tongueObj = Instantiate(tonguePrefab, spawnPosition, tonguePrefab.transform.rotation, transform);
+            Tongue tongue = tongueObj.GetComponent<Tongue>();
+            tongues.Add(tongue);
+            tongue.seekingMark = seekingMark;
+        }
     }
 
     public override void RecieveMeleeHit(PlayerMelee meleeAttack)
@@ -90,12 +147,19 @@ public class MikeWazowsky : Boss
         }
     }
 
-    public void ShootWithTongue()
+    public void ShootWithTongues()
     {
+        StartCoroutine(ShootWithTonguesCoroutine());
+    }
+
+    IEnumerator ShootWithTonguesCoroutine()
+    {
+        WaitForSeconds wait = new WaitForSeconds(pauseBetweenTongueAttacks);
         foreach(Tongue tongue in tongues)
         {
             BossPattern pattern = currentCombos[currentComboIndex].shootingPatterns[currentPatternIndex];
             tongue.Attack(pattern.shootingPattern, pattern.shootingPattern.prefabBullet);
+            yield return wait;
         }
         StopAttacking();
         comboFinished = true;

@@ -9,6 +9,7 @@ TagManager:
   - ScreenLimits
   - PlayerMelee
   - PlayerMap
+  - Pinpoint
   layers:
   - Default
   - TransparentFX

@@ -7,6 +7,10 @@ public class NecromancerBoss : Boss
     [SerializeField] private SoundEffectSO hitSoundEffect;
     [SerializeField] private float soundEffectCooldown = 0.5f;
     [SerializeField] private GameObject minionPrefab;
+    [SerializeField] private float minionTimeBetweenShots = 2.5f;
+    [Range(0f, 1f)]
+    [SerializeField] private float minionTimerAccel = 0.5f;
+    [SerializeField] private float delayTimer = 0.25f;
     bool damageable = false;
     public List<MinionBarrier> minionBarrier = new List<MinionBarrier>();
     public List<Transform> minionPositionPoints = new List<Transform>();
@@ -121,8 +125,10 @@ public class NecromancerBoss : Boss
             MinionBarrier newMinion = Instantiate(minionPrefab, transform.position, Quaternion.identity).GetComponent<MinionBarrier>();
             newMinion.necromancerBoss = this;
             newMinion.playerTransform = playerTransform;
-            newMinion.SetHealth((qty + 4) * 2f);
+            newMinion.SetHealth(qty * 2f);
             newMinion.SetNewPosition(minionPositionPoints[i]);
+            newMinion.SetTimeBetweenShoots(minionTimeBetweenShots - (minionTimeBetweenShots * minionTimerAccel * (qty - 2)));
+            newMinion.SetTimerDelay(i * delayTimer);
             minionBarrier.Add(newMinion);
         }
     }

@@ -16,6 +16,8 @@ public class SaveStateSO : ScriptableObject
 {
     [SerializeField] private List<CombatResult> combatResults = new List<CombatResult>();
     public int saveSlot;
+    public int totalThreatLevel;
+    public int totalBossesDefeated;
 
     public int GetTotalThreatLevel()
     {
@@ -28,6 +30,19 @@ public class SaveStateSO : ScriptableObject
             }
         }
         return totalThreatLevel;
+    }
+
+    public int GetTotalBossesDefeated()
+    {
+        int totalBossesDefeated = 0;
+        foreach (var result in combatResults)
+        {
+            if (result.completed)
+            {
+                totalBossesDefeated++;
+            }
+        }
+        return totalBossesDefeated;
     }
 
     public void AddOrUpdateCombatResult(CombatResult newResult)
@@ -43,6 +58,8 @@ public class SaveStateSO : ScriptableObject
         {
             combatResults.Add(newResult);
         }
+        totalThreatLevel = GetTotalThreatLevel();
+        totalBossesDefeated = GetTotalBossesDefeated();
 
         ManageSaveData.SaveData(this.saveSlot, this);
     }
@@ -62,6 +79,14 @@ public class SaveStateSO : ScriptableObject
             maxScore = 0;
             threatLevel = 0;
         }
+    }
+
+    public void ResetSaveState(int slotIndex)
+    {
+        combatResults.Clear();
+        totalThreatLevel = 0;
+        totalBossesDefeated = 0;
+        saveSlot = slotIndex;
     }
 
 

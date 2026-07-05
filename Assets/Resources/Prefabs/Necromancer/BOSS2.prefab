@@ -135,11 +135,11 @@ MonoBehaviour:
   comboPatterns:
   - comboName: Test
     shootingPatterns:
-    - shootingPattern: {fileID: 11400000, guid: 6faa5944cb710674cbbcd8f77226bf14, type: 2}
+    - shootingPattern: {fileID: 11400000, guid: e6e89d2410820e043afa9bfec53ea3ae, type: 2}
       shootOrigin: {fileID: 516846877893840153}
       waitTime: 0
     animationIndex: 0
-    waitBetweenCombosTime: 1.5
+    waitBetweenCombosTime: 7
   stunDmgMultiplier: 1
   bulletBaseDmg: 3
   chargedBulletDmg: 12
@@ -148,6 +148,9 @@ MonoBehaviour:
   hitSoundEffect: {fileID: 0}
   soundEffectCooldown: 0.5
   minionPrefab: {fileID: 6290424299215371658, guid: 6674dacc0eb7cb74e8e88c6bbab43ef5, type: 3}
+  minionTimeBetweenShots: 2.5
+  minionTimerAccel: 0.5
+  delayTimer: 1.25
   minionBarrier: []
   minionPositionPoints:
   - {fileID: 4647624832445404138}

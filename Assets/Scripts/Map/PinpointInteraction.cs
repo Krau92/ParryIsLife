@@ -6,7 +6,10 @@ public class PinpointInteraction : MonoBehaviour
     [SerializeField] bool isPlayerInRange = false;
 
     [SerializeField] BossBank bossBank;
-    public GameObject bossInfoPanel;
+    public UIBossInfo bossInfoPanel;
+    public PinpointInteraction prevBossRequired;
+    public int totalThreatRequired;
+
 
     void OnEnable()
     {
@@ -22,7 +25,7 @@ public class PinpointInteraction : MonoBehaviour
     {
         if (bossInfoPanel != null)
         {
-            bossInfoPanel.SetActive(false);
+            bossInfoPanel.gameObject.SetActive(false);
         }
     }
 
@@ -33,7 +36,7 @@ public class PinpointInteraction : MonoBehaviour
             isPlayerInRange = true;
             if(bossInfoPanel != null)
             {
-                bossInfoPanel.SetActive(true);
+                bossInfoPanel.gameObject.SetActive(true);
             }
         }
     }
@@ -44,7 +47,7 @@ public class PinpointInteraction : MonoBehaviour
             isPlayerInRange = false;
             if(bossInfoPanel != null)
             {
-                bossInfoPanel.SetActive(false);
+                bossInfoPanel.gameObject.SetActive(false);
             }
         }
     }
@@ -58,5 +61,30 @@ public class PinpointInteraction : MonoBehaviour
             CombatEvents.OnBossSelected?.Invoke(bossPrefab);
 
         }
+    }
+
+    public bool IsBossCompleted()
+    {
+        return bossInfoPanel != null && bossInfoPanel.IsCompleted();
+    }
+
+    public void CheckRequirement()
+    {
+        bossInfoPanel.UpdateUI();
+        if(prevBossRequired != null)
+        {
+            if(!prevBossRequired.IsBossCompleted())
+            {
+                gameObject.SetActive(false);
+                return;
+            }
+        }
+        if (bossInfoPanel.saveState.GetTotalThreatLevel() < totalThreatRequired)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
+
+        gameObject.SetActive(true);
     }
 }

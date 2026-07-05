@@ -16,6 +16,10 @@ public class InputManager : MonoBehaviour
     public static event Action onMeleeInput;
     public static event Action anyInputReceived;
 
+    //UI
+    public static event Action onCancelInput;
+    public static event Action onSubmitInput;
+
     public static InputManager Instance { get; private set; }  
     
 
@@ -88,6 +92,16 @@ public class InputManager : MonoBehaviour
         {
             anyInputReceived?.Invoke();
         }
+
+        //UI Input Handling
+
+        //Submit Input Handling
+        if (playerControls.UI.Submit.triggered)
+            onSubmitInput?.Invoke();
+
+        //Cancel Input Handling
+        if (playerControls.UI.Cancel.triggered)
+            onCancelInput?.Invoke();
     }
 
     public bool IsParryHold()

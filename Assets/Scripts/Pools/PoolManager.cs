@@ -10,6 +10,7 @@ public class PoolManager : MonoBehaviour
 
     //!Add here all the static references to the different pools
     private static GameObject bulletsSystemEmpty;
+    private static GameObject enemySystemEmpty;
     private static GameObject gameObjectsSystemEmpty;
     private static GameObject audioSystemEmpty;
 
@@ -21,7 +22,8 @@ public class PoolManager : MonoBehaviour
     {
         Bullets,    //player and enemy Bullets
         GameObjects, //Generic GameObjects
-        Audio       //Sound Effects
+        Audio,       //Sound Effects
+        Enemy
         //!Add more pool types here
     }
     public static PoolType poolType;
@@ -48,6 +50,9 @@ public class PoolManager : MonoBehaviour
 
         audioSystemEmpty = new GameObject("Audio Pool");
         audioSystemEmpty.transform.SetParent(emptyHolder.transform);
+
+        enemySystemEmpty = new GameObject("Enemy Pool");
+        enemySystemEmpty.transform.SetParent(emptyHolder.transform);
 
         //!Add more empties here
 
@@ -140,6 +145,8 @@ public class PoolManager : MonoBehaviour
                 return gameObjectsSystemEmpty;
             case PoolType.Audio:
                 return audioSystemEmpty;
+            case PoolType.Enemy:
+                return enemySystemEmpty;
 
             //!Add more cases here
             default:

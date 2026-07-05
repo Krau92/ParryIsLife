@@ -776,6 +776,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: BOSS2
       objectReference: {fileID: 0}
+    - target: {fileID: 8834509776522117380, guid: 44d8d260ecba4274588e87fa086d5cc4, type: 3}
+      propertyPath: minionTimeBetweenShots
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -907,7 +911,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6556784708918458156, guid: d1f2bf1e2c1f4af4b938c370816903f3, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -100.76062
+      value: -100.76065
       objectReference: {fileID: 0}
     - target: {fileID: 7888950214270727362, guid: d1f2bf1e2c1f4af4b938c370816903f3, type: 3}
       propertyPath: m_AnchoredPosition.y

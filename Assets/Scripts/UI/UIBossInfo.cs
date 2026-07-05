@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 public class UIBossInfo : MonoBehaviour
 {
-    [SerializeField] SaveStateSO saveState;
+    public SaveStateSO saveState;
     [SerializeField] PinpointInteraction pinpointInteraction;
     [SerializeField] TMP_Text bossName, maxScoreText;
     [SerializeField] GameObject completedIcon;
@@ -17,18 +17,8 @@ public class UIBossInfo : MonoBehaviour
     [SerializeField] private Color threatColor = new Color(1f, 0.5f, 0.5f, 0.8f);
     [SerializeField] private Color threatOffColor = new Color(1f, 0.5f, 0.5f, 0f);
 
-    void OnEnable()
-    {
-        UpdateUI();
-        CombatEvents.OnBossDefeated += UpdateUI;
-    }
 
-    void OnDisable()
-    {
-        CombatEvents.OnBossDefeated -= UpdateUI;
-    }
-
-    void UpdateUI()
+    public void UpdateUI()
     {
         saveState.GetBossInfo(pinpointInteraction.bossName, out completed, out maxScore, out threatLevel);
         bossName.text = pinpointInteraction.bossName;
@@ -40,4 +30,7 @@ public class UIBossInfo : MonoBehaviour
 
         maxScoreText.text = $"Max Score: {maxScore}";
     }
+
+    public bool IsCompleted() {return completed;}
+
 }

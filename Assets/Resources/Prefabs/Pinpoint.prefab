@@ -848,7 +848,9 @@ MonoBehaviour:
   bossName: DummyDumb
   isPlayerInRange: 0
   bossBank: {fileID: 11400000, guid: db5aa4d45519e124781a8e1342dca49e, type: 2}
-  bossInfoPanel: {fileID: 1624438913104627402}
+  bossInfoPanel: {fileID: 8530240429121028713}
+  prevBossRequired: {fileID: 0}
+  totalThreatRequired: 0
 --- !u!61 &5124064172703383991
 BoxCollider2D:
   m_ObjectHideFlags: 0

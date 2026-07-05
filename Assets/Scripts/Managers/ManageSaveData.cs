@@ -41,5 +41,28 @@ public static class ManageSaveData
             Debug.LogWarning($"Save file not found at {filePath}");
         }
     }
+
+    public static bool GetFileData(int slotIndex, out int totalThreatLevel, out int totalBossesDefeated)
+    {
+        string filePath = Application.persistentDataPath + $"/save_slot_{slotIndex}.json";
+
+        if (File.Exists(filePath))
+        {
+            string jsonData = File.ReadAllText(filePath);
+            SaveStateSO tempSaveData = ScriptableObject.CreateInstance<SaveStateSO>();
+            JsonUtility.FromJsonOverwrite(jsonData, tempSaveData);
+
+            totalThreatLevel = tempSaveData.totalThreatLevel;
+            totalBossesDefeated = tempSaveData.totalBossesDefeated;
+            return true;
+        }
+        else
+        {
+            Debug.LogWarning($"Save file not found at {filePath}");
+            totalThreatLevel = 0;
+            totalBossesDefeated = 0;
+            return false;
+        }
+    }
     
 }

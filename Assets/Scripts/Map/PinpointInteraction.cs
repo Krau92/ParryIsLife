@@ -58,7 +58,7 @@ public class PinpointInteraction : MonoBehaviour
         {
             
             GameObject bossPrefab = bossBank.GetBossPrefab(bossName);
-            CombatEvents.OnBossSelected?.Invoke(bossPrefab);
+            GameEvents.OnBossSelected?.Invoke(bossPrefab);
 
         }
     }

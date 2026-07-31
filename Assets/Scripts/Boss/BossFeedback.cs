@@ -25,12 +25,12 @@ public class BossFeedback : MonoBehaviour
 
     void OnEnable()
     {
-        CombatEvents.OnBossDamaged += OnBossDamaged;
+        GameEvents.OnBossDamaged += OnBossDamaged;
     }
 
     void OnDisable()
     {
-        CombatEvents.OnBossDamaged -= OnBossDamaged;
+        GameEvents.OnBossDamaged -= OnBossDamaged;
     }
 
     void OnDestroy()

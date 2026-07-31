@@ -151,7 +151,7 @@ public class NewTestBullet : MonoBehaviour
 
     public void ReflectBullet(Vector2 newOrigin)
     {
-        CombatEvents.OnReflectedBullet?.Invoke();
+        GameEvents.OnReflectedBullet?.Invoke();
         reflected = true;
         Vector2 newDirection = -direction;
 
@@ -180,7 +180,7 @@ public class NewTestBullet : MonoBehaviour
 
     public void ParriedBullet(Vector2 newOrigin)
     {
-        CombatEvents.OnParriedBullet?.Invoke();
+        GameEvents.OnParriedBullet?.Invoke();
         if(parreable)
             ReflectBullet(newOrigin);
         else

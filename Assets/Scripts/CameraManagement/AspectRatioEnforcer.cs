@@ -6,7 +6,7 @@ public class AspectRatioEnforcer : MonoBehaviour
 
     public float targetAspect = 3.0f / 4.0f; // Tu ratio 3:4
     
-    private Camera cam;
+    [SerializeField] private Camera cam;
     private int lastWidth = 0;
     private int lastHeight = 0;
 

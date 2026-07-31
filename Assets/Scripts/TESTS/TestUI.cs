@@ -17,12 +17,12 @@ public class TestUI : MonoBehaviour
 
     void OnEnable()
     {
-        CombatEvents.OnPlayerCreated += GetPlayer;
+        GameEvents.OnPlayerCreated += GetPlayer;
     }
 
     void OnDisable()
     {
-        CombatEvents.OnPlayerCreated -= GetPlayer;
+        GameEvents.OnPlayerCreated -= GetPlayer;
     }
 
     void GetPlayer(GameObject playerObj)

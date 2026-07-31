@@ -11,7 +11,7 @@ public class UIBossInfo : MonoBehaviour
     [SerializeField] GameObject completedIcon;
     int threatLevel;
     int maxScore;
-    bool completed;
+    [SerializeField] bool completed;
     
     [SerializeField] private List<Image> threatDisplays;
     [SerializeField] private Color threatColor = new Color(1f, 0.5f, 0.5f, 0.8f);

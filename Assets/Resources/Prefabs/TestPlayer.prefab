@@ -1230,7 +1230,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   defaultSpeed: 60
   slowdownFactor: 0.5
-  requiredState: 2
+  requiredState: 1
   mainCamera: {fileID: 0}
   rb: {fileID: 2518324608663349931}
 --- !u!50 &2518324608663349931

@@ -58,7 +58,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5957085209430914116, guid: 12f4b53398652014d8ccf20f87148d4c, type: 3}
       propertyPath: requiredState
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8222465771515404648, guid: 12f4b53398652014d8ccf20f87148d4c, type: 3}
       propertyPath: m_Name

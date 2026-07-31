@@ -1,7 +1,7 @@
 using UnityEngine;
 using System;
 
-public static class CombatEvents
+public static class GameEvents
 {
     public static Action<SoundEffectSO> OnSoundShouldTrigger;
     public static Action OnChargingParryStart;
@@ -30,5 +30,10 @@ public static class CombatEvents
     public static Action OnReflectedBullet;
     public static Action<int> OnMeleeHit;
     public static Action OnEnemyStunned;
+
+    //UI
+    public static Action OnPanelClosed;
+    public static Action<GameObject> OnButtonPressed;
+
 
 }

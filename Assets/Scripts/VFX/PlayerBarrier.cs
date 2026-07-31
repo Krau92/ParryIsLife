@@ -34,14 +34,14 @@ public class PlayerBarrier : MonoBehaviour
 
     private void OnEnable()
     {
-        CombatEvents.OnBossSelected += ResetBarrierColor;
-        CombatEvents.OnDamageTaken += UpdateBarrierColor;
+        GameEvents.OnBossSelected += ResetBarrierColor;
+        GameEvents.OnDamageTaken += UpdateBarrierColor;
     }
 
     private void OnDisable()
     {
-        CombatEvents.OnBossSelected -= ResetBarrierColor;
-        CombatEvents.OnDamageTaken -= UpdateBarrierColor;
+        GameEvents.OnBossSelected -= ResetBarrierColor;
+        GameEvents.OnDamageTaken -= UpdateBarrierColor;
     }
 
     private void Update()

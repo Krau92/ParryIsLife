@@ -26,7 +26,7 @@ public class PlayerParry : MonoBehaviour
         isChargingParry = false;
         InputManager.onParryInput += TryToParry;
         InputManager.onStopParryInput += TryToChargedParry;
-        CombatEvents.OnCombatEnded += TryToChargedParry; 
+        GameEvents.OnCombatEnded += TryToChargedParry; 
 
     }
 
@@ -34,7 +34,7 @@ public class PlayerParry : MonoBehaviour
     {
         InputManager.onParryInput -= TryToParry;
         InputManager.onStopParryInput -= TryToChargedParry;
-        CombatEvents.OnCombatEnded -= TryToChargedParry;
+        GameEvents.OnCombatEnded -= TryToChargedParry;
     }
 
 
@@ -55,7 +55,7 @@ public class PlayerParry : MonoBehaviour
                 if(chargingBufferTimer >= chargingBufferTime)
                 {
                     isChargingParry = true;
-                    CombatEvents.OnChargingParryStart?.Invoke();
+                    GameEvents.OnChargingParryStart?.Invoke();
                 }
                 return;
             }
@@ -66,7 +66,7 @@ public class PlayerParry : MonoBehaviour
         {
             chargingBufferTimer = 0f;
             isChargingParry = false;
-            CombatEvents.OnChargingParryEnd?.Invoke();
+            GameEvents.OnChargingParryEnd?.Invoke();
             parryHoldTimer = 0f;
         }
 

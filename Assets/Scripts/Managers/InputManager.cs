@@ -19,6 +19,7 @@ public class InputManager : MonoBehaviour
     //UI
     public static event Action onCancelInput;
     public static event Action onSubmitInput;
+    public static event Action onMenuInput;
 
     public static InputManager Instance { get; private set; }  
     
@@ -102,6 +103,12 @@ public class InputManager : MonoBehaviour
         //Cancel Input Handling
         if (playerControls.UI.Cancel.triggered)
             onCancelInput?.Invoke();
+
+        //Menu Input Handling
+        if(playerControls.UI.Menu.triggered)
+            onMenuInput?.Invoke();
+        
+
     }
 
     public bool IsParryHold()

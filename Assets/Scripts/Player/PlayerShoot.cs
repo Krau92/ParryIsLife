@@ -20,14 +20,14 @@ public class PlayerShoot : MonoBehaviour
     {
         InputManager.onShootInput += Shoot;
         InputManager.onStopShootInput += ReleaseChargedShot;
-        CombatEvents.OnCombatEnded += ReleaseChargedShot;
+        GameEvents.OnCombatEnded += ReleaseChargedShot;
     }
 
     void OnDisable()
     {
         InputManager.onShootInput -= Shoot;
         InputManager.onStopShootInput -= ReleaseChargedShot;
-        CombatEvents.OnCombatEnded -= ReleaseChargedShot;
+        GameEvents.OnCombatEnded -= ReleaseChargedShot;
     }
 
     void Update()
@@ -49,7 +49,7 @@ public class PlayerShoot : MonoBehaviour
                 if(chargingBufferTimer >= chargingBufferTime)
                 {
                     isChargingShot = true;
-                    CombatEvents.OnChargingShotStart?.Invoke();
+                    GameEvents.OnChargingShotStart?.Invoke();
                 }
                 return;
             }
@@ -94,7 +94,7 @@ public class PlayerShoot : MonoBehaviour
             }
         }
 
-        CombatEvents.OnChargingShotEnd?.Invoke();
+        GameEvents.OnChargingShotEnd?.Invoke();
         
         isChargingShot = false;
         chargedShootTimer = 0f;

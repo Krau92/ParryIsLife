@@ -54,7 +54,7 @@ public class SaveStateSO : ScriptableObject
             existingResult.maxScore = Mathf.Max(existingResult.maxScore, newResult.maxScore);
             existingResult.threatLevel = Mathf.Max(existingResult.threatLevel, newResult.threatLevel);
         }
-        else
+        else if (existingResult == null)
         {
             combatResults.Add(newResult);
         }

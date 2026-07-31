@@ -40,14 +40,14 @@ public class ChargingParry : MonoBehaviour
 
     void OnEnable()
     {
-        CombatEvents.OnChargingParryStart += HandleChargingParryStart;
-        CombatEvents.OnChargingParryEnd += HandleChargingParryEnd;
+        GameEvents.OnChargingParryStart += HandleChargingParryStart;
+        GameEvents.OnChargingParryEnd += HandleChargingParryEnd;
     }
     
     void OnDisable()
     {
-        CombatEvents.OnChargingParryStart -= HandleChargingParryStart;
-        CombatEvents.OnChargingParryEnd -= HandleChargingParryEnd;
+        GameEvents.OnChargingParryStart -= HandleChargingParryStart;
+        GameEvents.OnChargingParryEnd -= HandleChargingParryEnd;
     }
 
     private void HandleChargingParryStart()

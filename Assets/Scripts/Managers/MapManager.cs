@@ -8,12 +8,12 @@ public class MapManager : MonoBehaviour
 
     void OnEnable()
     {
-        CombatEvents.OnBossDefeated += CheckAllPinpoints;
+        GameEvents.OnResultsClosed += CheckAllPinpoints;
     }
 
     void OnDisable()
     {
-        CombatEvents.OnBossDefeated -= CheckAllPinpoints;
+        GameEvents.OnResultsClosed -= CheckAllPinpoints;
     }
 
     void Start()

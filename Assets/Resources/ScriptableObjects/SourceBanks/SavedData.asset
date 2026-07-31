@@ -15,10 +15,16 @@ MonoBehaviour:
   combatResults:
   - bossName: DummyDumb
     completed: 1
-    maxScore: 159
-    threatLevel: 2
+    maxScore: 18
+    threatLevel: 3
   - bossName: MikeWazowsky
     completed: 1
-    maxScore: 159
+    maxScore: 0
     threatLevel: 3
-  saveSlot: 1
+  - bossName: Necromancer
+    completed: 0
+    maxScore: 0
+    threatLevel: 0
+  saveSlot: 0
+  totalThreatLevel: 6
+  totalBossesDefeated: 2

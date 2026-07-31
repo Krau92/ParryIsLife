@@ -122,7 +122,7 @@ public class NecromancerBoss : Boss
     {
         for (int i = 0; i < qty; i++)
         {
-            MinionBarrier newMinion = Instantiate(minionPrefab, transform.position, Quaternion.identity).GetComponent<MinionBarrier>();
+            MinionBarrier newMinion = Instantiate(minionPrefab, transform.position, Quaternion.identity, transform).GetComponent<MinionBarrier>();
             newMinion.necromancerBoss = this;
             newMinion.playerTransform = playerTransform;
             newMinion.SetHealth(qty * 2f);

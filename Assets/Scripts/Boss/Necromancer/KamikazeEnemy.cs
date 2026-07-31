@@ -23,6 +23,16 @@ public class KamikazeEnemy : MonoBehaviour
     private enum State { Waiting, Seeking, Stopped, Diving, Dead }
     private State state;
 
+    void OnEnable()
+    {
+        GameEvents.OnBossDefeated += DestroyThis;
+    }
+
+    void OnDisable()
+    {
+        GameEvents.OnBossDefeated -= DestroyThis;
+    }
+
     public void SetKamikaze(Vector2 spawnPosition, Vector2 moveToPosition, float waitTime, float seekTime, float moveSpeed, Transform target)
     {
         this.moveToPosition = moveToPosition;
@@ -135,5 +145,10 @@ public class KamikazeEnemy : MonoBehaviour
         {
             ReturnToPool();
         }
+    }
+
+    private void DestroyThis()
+    {
+        ReturnToPool();
     }
 }

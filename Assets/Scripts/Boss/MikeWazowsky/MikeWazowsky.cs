@@ -18,6 +18,7 @@ public class MikeWazowsky : Boss
     protected override void Start()
     {
         seekingMark = Instantiate(seekingMarkPrefab, transform.position, seekingMarkPrefab.transform.rotation);
+        nonParentedObjectsToDestroyOnDefeat.Add(seekingMark);
         seekingMark.SetActive(false);
         base.Start();
     }

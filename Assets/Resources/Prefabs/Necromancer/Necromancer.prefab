@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 737146696443551133}
   - component: {fileID: 266157096313154895}
   m_Layer: 9
-  m_Name: BOSS2
+  m_Name: Necromancer
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -116,6 +116,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 43ea27d80b2c33d4685b161d6fb8f368, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::NecromancerBoss
+  bossName: Necromancer
   animationManager: {fileID: 4949561528743824246}
   timeToStartAttacking: 2
   threatLevelThresholds: 320000007d00000004010000

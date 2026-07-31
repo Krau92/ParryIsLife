@@ -31,6 +31,8 @@ public class BossComboPattern
 
 public abstract class Boss : MonoBehaviour
 {
+    public List<GameObject> nonParentedObjectsToDestroyOnDefeat;
+    public string bossName;
     [Header("Setting up")]
     [SerializeField] protected BossAnimationManaging animationManager;
     protected Transform playerTransform;
@@ -80,12 +82,12 @@ public abstract class Boss : MonoBehaviour
 
     void OnEnable()
     {
-        CombatEvents.OnPlayerDeath += DestroyBoss;
+        GameEvents.OnPlayerDeath += DestroyBoss;
     }
 
     void OnDisable()
     {
-        CombatEvents.OnPlayerDeath -= DestroyBoss;
+        GameEvents.OnPlayerDeath -= DestroyBoss;
     }
 
     protected virtual void Start()
@@ -161,7 +163,7 @@ public abstract class Boss : MonoBehaviour
 
     public void SetVulnerable()
     {
-        CombatEvents.OnEnemyStunned?.Invoke();
+        GameEvents.OnEnemyStunned?.Invoke();
         isInmune = false;
         animationManager.SetInmune(isInmune);
         dmgMultiplier = stunDmgMultiplier;
@@ -185,7 +187,7 @@ public abstract class Boss : MonoBehaviour
             return;
         int intDamage = Mathf.RoundToInt(damage);
         currentHealth -= intDamage;
-        CombatEvents.OnBossDamaged?.Invoke();
+        GameEvents.OnBossDamaged?.Invoke();
 
         CheckChangingPhase();
 
@@ -196,6 +198,8 @@ public abstract class Boss : MonoBehaviour
             isDefeated = true;
             currentHealth = 0;
             animationManager.SetDead();
+            
+            GameEvents.OnBossDefeated?.Invoke();
 
             DestroyBoss(); 
             //!La animación de muerte debería lanzar el evento para poder mostrar toda la cinemática antes.
@@ -321,9 +325,15 @@ public abstract class Boss : MonoBehaviour
         StopAttacking();
         StopBossBehavior();
         isActive = false;
+        foreach (GameObject obj in nonParentedObjectsToDestroyOnDefeat)
+        {
+            if (obj != null)
+            {
+                Destroy(obj);
+            }
+        }
         
         Destroy(gameObject);
-        CombatEvents.OnBossDefeated?.Invoke();
     }
 
 

@@ -8,6 +8,7 @@ public class MenuUtils : MonoBehaviour
     bool readyToExecute = false;
     bool submitPressed = false;
     bool cancelPressed = false;
+    Coroutine currentCoroutine;
 
     public static MenuUtils Instance { get; private set; }
 
@@ -38,7 +39,10 @@ public class MenuUtils : MonoBehaviour
 
     public void DelayedFunction(Action action, float delay, string textToShow)
     {
-        StartCoroutine(DelayedFunctionCoroutine(action, delay, textToShow));
+        if(currentCoroutine == null)
+        {
+            currentCoroutine = StartCoroutine(DelayedFunctionCoroutine(action, delay, textToShow));
+        }
     }
 
     private IEnumerator DelayedFunctionCoroutine(Action action, float delay, string textToShow)
@@ -63,6 +67,7 @@ public class MenuUtils : MonoBehaviour
         cancelPressed = false;
 
         HideText();
+        currentCoroutine = null;
     }
 
     private void ShowText(string text)
@@ -91,5 +96,7 @@ public class MenuUtils : MonoBehaviour
             cancelPressed = true;
         }
     }
+
+    
 
 }

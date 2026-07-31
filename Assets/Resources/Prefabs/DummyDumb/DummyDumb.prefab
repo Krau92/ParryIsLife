@@ -123,6 +123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 34607aeef889a3a4db6cda22f18836b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DummyDumb
+  bossName: DummyDumb
   animationManager: {fileID: 3983925744951244008}
   timeToStartAttacking: 2
   threatLevelThresholds: 32000000960000002c010000
@@ -208,6 +209,7 @@ MonoBehaviour:
     m_NumColorKeys: 4
     m_NumAlphaKeys: 2
   hitFlashDuration: 0.05
+  spriteRenderer: {fileID: 0}
 --- !u!111 &7396154775169397292
 Animation:
   m_ObjectHideFlags: 0

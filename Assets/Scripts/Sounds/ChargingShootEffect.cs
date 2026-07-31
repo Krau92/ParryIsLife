@@ -57,14 +57,14 @@ public class ChargingSootEffect : MonoBehaviour
 
     void OnEnable()
     {
-        CombatEvents.OnChargingShotStart += HandleChargingShotStart;
-        CombatEvents.OnChargingShotEnd += HandleChargingShotEnd;
+        GameEvents.OnChargingShotStart += HandleChargingShotStart;
+        GameEvents.OnChargingShotEnd += HandleChargingShotEnd;
     }
 
     void OnDisable()
     {
-        CombatEvents.OnChargingShotStart -= HandleChargingShotStart;
-        CombatEvents.OnChargingShotEnd -= HandleChargingShotEnd;
+        GameEvents.OnChargingShotStart -= HandleChargingShotStart;
+        GameEvents.OnChargingShotEnd -= HandleChargingShotEnd;
     }
 
     void Update()

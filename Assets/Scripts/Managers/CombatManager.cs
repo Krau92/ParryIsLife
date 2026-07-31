@@ -23,7 +23,7 @@ public class CombatManager : MonoBehaviour
     [SerializeField] private int pointsOnEnemyStun = 10;
 
 
-    CombatResult combatResult = new CombatResult();
+    public CombatResult combatResult = new CombatResult();
     public CombatResult CombatResults => combatResult;
     int[] threatLevelThresholds = new int[3];
 
@@ -32,28 +32,28 @@ public class CombatManager : MonoBehaviour
     {
 
         // originalDeltaTime = Time.fixedDeltaTime;
-        CombatEvents.OnPlayerCreated += GetPlayer;
-        CombatEvents.OnDamageTaken += OnDamageTaken;
-        CombatEvents.OnParriedBullet += OnParriedBullet;
-        CombatEvents.OnReflectedBullet += OnReflectedBullet;
-        CombatEvents.OnMeleeHit += OnMeleeHit;
-        CombatEvents.OnEnemyStunned += OnEnemyStunned;
-        CombatEvents.OnBossSelected += BossSelected;
-        CombatEvents.OnBossDefeated += OnBossDefeated;
-        CombatEvents.OnPlayerDeath += EndCombat;
+        GameEvents.OnPlayerCreated += GetPlayer;
+        GameEvents.OnDamageTaken += OnDamageTaken;
+        GameEvents.OnParriedBullet += OnParriedBullet;
+        GameEvents.OnReflectedBullet += OnReflectedBullet;
+        GameEvents.OnMeleeHit += OnMeleeHit;
+        GameEvents.OnEnemyStunned += OnEnemyStunned;
+        GameEvents.OnBossSelected += BossSelected;
+        GameEvents.OnBossDefeated += OnBossDefeated;
+        GameEvents.OnPlayerDeath += EndCombat;
     }
 
     void OnDisable()
     {
-        CombatEvents.OnPlayerCreated -= GetPlayer;
-        CombatEvents.OnDamageTaken -= OnDamageTaken;
-        CombatEvents.OnParriedBullet -= OnParriedBullet;
-        CombatEvents.OnReflectedBullet -= OnReflectedBullet;
-        CombatEvents.OnMeleeHit -= OnMeleeHit;
-        CombatEvents.OnEnemyStunned -= OnEnemyStunned;
-        CombatEvents.OnBossSelected -= BossSelected;
-        CombatEvents.OnBossDefeated -= OnBossDefeated;
-        CombatEvents.OnPlayerDeath -= EndCombat;
+        GameEvents.OnPlayerCreated -= GetPlayer;
+        GameEvents.OnDamageTaken -= OnDamageTaken;
+        GameEvents.OnParriedBullet -= OnParriedBullet;
+        GameEvents.OnReflectedBullet -= OnReflectedBullet;
+        GameEvents.OnMeleeHit -= OnMeleeHit;
+        GameEvents.OnEnemyStunned -= OnEnemyStunned;
+        GameEvents.OnBossSelected -= BossSelected;
+        GameEvents.OnBossDefeated -= OnBossDefeated;
+        GameEvents.OnPlayerDeath -= EndCombat;
     }
 
     // private Coroutine activeHitStop;
@@ -94,14 +94,14 @@ public class CombatManager : MonoBehaviour
 
     private void BossSelected(GameObject boss)
     {
-        threatLevelThresholds = boss.GetComponent<Boss>().ThreatLevelThresholds;
-        combatResult = new CombatResult
-        {
-            bossName = boss.name,
-            completed = false,
-            maxScore = 0,
-            threatLevel = 0
-        };
+        Boss currentBoss = boss.GetComponent<Boss>();
+        threatLevelThresholds = currentBoss.ThreatLevelThresholds;
+
+        combatResult.bossName = currentBoss.bossName;
+        combatResult.completed = false;
+        combatResult.maxScore = 0;
+        combatResult.threatLevel = 0;
+
     }
 
     private void OnDamageTaken()

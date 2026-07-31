@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.EventSystems;
 using TMPro;
 
 public class SaveSlot : MonoBehaviour
@@ -10,10 +11,11 @@ public class SaveSlot : MonoBehaviour
     public SaveStateSO saveState; // Reference to the SaveStateSO ScriptableObject
     public TMP_Text dataText; // Reference to the Text component to display data
     public GameObject deleteButton; // Reference to the delete button GameObject
+    public StartGameMenu startGameMenu; // Reference to the StartGameMenu script
 
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void OnEnable()
     {
         CheckForSavedData();
     }
@@ -47,14 +49,16 @@ public class SaveSlot : MonoBehaviour
         {
             saveState.ResetSaveState(slotIndex);
         }
+
+        startGameMenu.StartGame();
+
     }
 
     public void OnClickDelete()
     {
         if (thereIsSavedData)
         {
-            MenuUtils.Instance.DelayedFunction(DeleteSaveData, 0.5f, "Are you sure you want to delete this save data?\nPress Submit to confirm or Cancel to abort.");
-                
+            MenuUtils.Instance.DelayedFunction(DeleteSaveData, 0.5f, "Are you sure you want to delete this save data?\nPress Submit to confirm or Cancel to abort.");   
             CheckForSavedData(); // Refresh the display after deletion
         }
     }
@@ -64,6 +68,9 @@ public class SaveSlot : MonoBehaviour
         ManageSaveData.DeleteData(slotIndex);
         thereIsSavedData = false;
         CheckForSavedData(); // Refresh the display after deletion
+        EventSystem.current.SetSelectedGameObject(gameObject); // Set the selected button back to this save slot
     }
+
+
 
 }

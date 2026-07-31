@@ -6,11 +6,9 @@ using System;
 
 public enum GameState
 {
-    MainMenu,
     InMap,
     InCombat,
-    ShowingResults,
-    Paused
+    ShowingResults
 }
 
 public class GameManager : MonoBehaviour
@@ -20,6 +18,9 @@ public class GameManager : MonoBehaviour
     public GameObject playerPrefab, playerInstance, bossInstance;
     [SerializeField] private AspectRatioEnforcer aspectRatioEnforcer;
     [SerializeField] private CinemachineCamera combatCamera, mapCamera;
+
+    //UI
+    public GameObject pauseMenu;
 
 
 
@@ -46,14 +47,16 @@ public class GameManager : MonoBehaviour
 
     void OnEnable()
     {
-        CombatEvents.OnBossSelected += SpawnBoss;
-        CombatEvents.OnResultsClosed += BackToMap;
+        GameEvents.OnBossSelected += SpawnBoss;
+        GameEvents.OnResultsClosed += BackToMap;
+        InputManager.onMenuInput += TogglePause;
     }
 
     void OnDisable()
     {
-        CombatEvents.OnBossSelected -= SpawnBoss;
-        CombatEvents.OnResultsClosed -= BackToMap;
+        GameEvents.OnBossSelected -= SpawnBoss;
+        GameEvents.OnResultsClosed -= BackToMap;
+        InputManager.onMenuInput -= TogglePause;
     }
 
     void Start()
@@ -68,7 +71,7 @@ public class GameManager : MonoBehaviour
 
         if (currentGameState == GameState.InCombat && newState == GameState.ShowingResults)
         {
-            CombatEvents.OnCombatEnded?.Invoke();
+            GameEvents.OnCombatEnded?.Invoke();
             if (playerInstance != null)
             {
                 Destroy(playerInstance);
@@ -122,7 +125,7 @@ public class GameManager : MonoBehaviour
             Destroy(playerInstance);
         }
         playerInstance = Instantiate(playerPrefab, playerSpawnPoint.position, Quaternion.identity);
-        CombatEvents.OnPlayerCreated?.Invoke(playerInstance);
+        GameEvents.OnPlayerCreated?.Invoke(playerInstance);
 
         if (bossInstance != null)
         {
@@ -135,4 +138,20 @@ public class GameManager : MonoBehaviour
     {
         SetGameState(GameState.InMap);
     }
+
+    private void TogglePause()
+    {
+        MenuPanel pauseMenuPanel = pauseMenu.GetComponent<MenuPanel>();
+        if(pauseMenu != null && pauseMenu.activeSelf == false)
+        {
+            pauseMenuPanel.ToggleMenu();
+            Time.timeScale = 0f; 
+        } else if(pauseMenu != null && pauseMenu.activeSelf == true)
+        {
+            pauseMenuPanel.ToggleMenu();
+            Time.timeScale = 1f; 
+        }
+    }
+
+
 }

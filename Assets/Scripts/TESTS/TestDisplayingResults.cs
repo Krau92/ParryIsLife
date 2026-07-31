@@ -59,7 +59,7 @@ public class TestDisplayingResults : MonoBehaviour
         if (resultPanel.activeSelf && timer <= 0f)
         {
             resultPanel.SetActive(false);
-            CombatEvents.OnResultsClosed?.Invoke();
+            GameEvents.OnResultsClosed?.Invoke();
         }
     }
 
